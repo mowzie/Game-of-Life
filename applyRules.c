@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "applyRules.h"
+#include "globals.h"
 
 void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
 	int i, j = 0;
@@ -59,16 +60,16 @@ void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
 	}
 }
 
-void printGrid(char gridCurr[][COLS], int rows) {
-	int i, j = 0;
-
-	for (i = 0; i < rows; i++) {
-		for (j = 0; j < COLS; j++) {
-			printf("%c", gridCurr[i][j]);
-		}
-		puts("");
-	}
-}
+//void printGrid(char gridCurr[][COLS], int rows) {
+//	int i, j = 0;
+//
+//	for (i = 0; i < rows; i++) {
+//		for (j = 0; j < COLS; j++) {
+//			printf("%c", gridCurr[i][j]);
+//		}
+//		puts("");
+//	}
+//}
 
 void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
 	int i, j = 0;

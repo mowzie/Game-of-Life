@@ -14,12 +14,8 @@
 #include <time.h>
 #include "datfile.h"
 #include "applyRules.h"
+#include "globals.h"
 
-#define	KEY_ESC 27
-#define	ARROW_UP 72
-#define	ARROW_DOWN 80
-#define	ARROW_LEFT 75
-#define	ARROW_RIGHT	77
 
 //---------------------------------------------------------
 // Function: gotoxy()
@@ -58,10 +54,12 @@
 //			12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(int x, int y) {
+    
 	COORD coord;
-	coord.X = x;
+    coord.X = x;
 	coord.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    
 }
 
 //---------------------------------------------------------
