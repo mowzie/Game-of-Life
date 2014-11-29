@@ -13,20 +13,31 @@ void displayMenu();
 int main(void) {
     char filename[FILENAME_MAX];        //TODO:  this should go to a seperate function
 	char gridA[ROWS][COLS];             //
-	char gridB[ROWS][COLS];             //
-	char (*gridPtrCurr)[COLS] = NULL;   //
+	char gridB[ROWS][COLS];
+   	char (*gridPtrCurr)[COLS] = NULL;   //
 	char (*gridPtrNext)[COLS] = NULL;   //
 	char (*tmpPtr)[COLS] = NULL;        //
 	char ch = ' ';                      //getch holder when running 
-	char* datfile = ".\\worlds\\welcome.txt";      //starting world
+	char datfile[FILENAME_MAX];      //starting world
 	int quit = 0;                       //"bool" to show start screen
     int count = 0;                      //generation counter
-    
-    //Windows.h call:  set the window size when it loads so we can see everything
-        SMALL_RECT windowSize = {0 , 0 , COLS , ROWS+3};
+    int i = 0;
+    int j = 0;
+
+    ////Windows.h call:  set the window size when it loads so we can see everything
+    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS+3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
     //
-
+        for (i = 0; i < ROWS; i++)
+    {
+        for(j = 0; j < COLS; j++)
+        {
+            gridA[i][j] = ' ';
+            gridB[i][j] = ' ';
+        }
+    }
+    strcpy(datfile, ".\\worlds\\welcome.txt");
+    
     readDatFile(datfile, gridA, ROWS);
 	gridPtrCurr = gridA;
 	gridPtrNext = gridB;
@@ -49,7 +60,7 @@ int main(void) {
             printGrid(gridPtrCurr, gridPtrNext);
         }
         printGrid(gridPtrCurr, gridPtrNext);
-		setEqualTo(gridPtrCurr, gridPtrNext, ROWS);
+		
 		applyRules(gridPtrCurr, gridPtrNext, ROWS);
 		
 		// swap pointers
@@ -70,7 +81,7 @@ int main(void) {
             case 'C':
             case 'c': //TODO: Prompt for a name to save as
                 system("cls");
-                datfile = "worlds/new.txt";
+                strcpy(datfile, ".\\worlds\\new.txt");
                 createDatFile(datfile);
                 quit = 1;
                 break;
@@ -87,13 +98,17 @@ int main(void) {
                    else
                       while(getchar() != '\n')
                         ;
-                datfile = filename;
+                   strcpy(datfile, ".\\worlds\\");
+                   strcat(datfile, filename);
+             //      strncat(datfile,filename);
+            //    datfile = ".\\world\\" + filename;
+                //strcat(datfile, filename);
                 quit = 1;
                 break;
             case 'R':
             case 'r':
             	createRandDatFile("worlds/datfile.txt");
-                datfile = "worlds/datfile.txt";
+                strcpy(datfile, ".\\worlds\\datfile.txt");
                 quit = 1;
                 break;
             default:
@@ -112,7 +127,7 @@ int main(void) {
         
         gotoxy(COLS-9,ROWS+1);
         printf("Gen: %4d", count++);
-        setEqualTo(gridPtrCurr, gridPtrNext, ROWS);
+        //setEqualTo(gridPtrCurr, gridPtrNext, ROWS);
 		applyRules(gridPtrCurr, gridPtrNext, ROWS);
 		printGrid(gridPtrCurr, gridPtrNext);
 		// swap pointers
@@ -169,7 +184,6 @@ int displayRunningMenu()
         printf(" ");
     }
     printf("\nAny other key to advance generations");
-
     //printf("(ESC) to quit\t(L)oad World\t(C)reate World\t(R)estart World\nAny other key to advance generations");
     return 1;
 }

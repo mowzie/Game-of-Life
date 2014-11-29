@@ -4,9 +4,11 @@
 #include "globals.h"
 
 void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
+    
 	int i, j = 0;
 	int neighbors = 0;
 
+    setEqualTo(gridCurr, gridNext, ROWS);
 	for (i = 0; i < rows; i++) {
 		for (j = 0; j < COLS; j++) {
 			// Check if an organism is born into an empty cell if it has exactly 3 neighbors
