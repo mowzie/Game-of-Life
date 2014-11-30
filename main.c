@@ -7,20 +7,20 @@
 #include "dirent.h"		//for listing directory contents
 #include "globals.h"
 
+void loadFile(char* datfile);
 int displayFiles(void);
 void displayMenu(void);
 int displayRunningMenu(void);
 int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]);
 
 int main(void) {
-	char filename[FILENAME_MAX];		//TODO:  this should go to a seperate function
+	char datfile[FILENAME_MAX];			//starting world filename
 	char gridA[ROWS][COLS];				//create two arrays for the current and next state
 	char gridB[ROWS][COLS];
 	char (*gridPtrCurr)[COLS] = NULL;	//pointer to the currently displayed array
 	char (*gridPtrNext)[COLS] = NULL;	//pointer to the next array to be used
 	char (*tmpPtr)[COLS] = NULL;		//temporary pointer used for pointer swap
 	char ch = ' ';						//getch holder when running
-	char datfile[FILENAME_MAX];			//starting world
 	int quit = 0;						//"bool" to show start screen
 	int count = 0;						//generation counter
 	int i = 0;
@@ -82,20 +82,8 @@ int main(void) {
                 quit = 1;
                 break;
 
-            case 'l':  //TODO:  Put this in a function Call
-				system("cls");
-				printf("Please choose a file\n");
-				displayFiles();
-
-				fgets(filename, FILENAME_MAX, stdin);
-				/* remove the newline from the filename and terminate string */
-				if (filename[strlen(filename) - 1] == '\n')
-					filename[strlen(filename) -1] = '\0';
-				else
-					while(getchar() != '\n')
-						;
-				strcpy(datfile, ".\\worlds\\");
-				strcat(datfile, filename);
+            case 'l':
+				loadFile(datfile);
 				quit = 1;
 				break;
 
@@ -132,6 +120,24 @@ int main(void) {
 	} while(ch != KEY_ESC);
 
 	return EXIT_SUCCESS;
+}
+
+void loadFile(char* datfile) {
+	char filename[FILENAME_MAX];
+
+	system("cls");
+	printf("Please choose a file\n");
+	displayFiles();
+
+	fgets(filename, FILENAME_MAX, stdin);
+	/* remove the newline from the filename and terminate string */
+	if (filename[strlen(filename) - 1] == '\n')
+		filename[strlen(filename) - 1] = '\0';
+	else
+		while (getchar() != '\n')
+			;
+	strcpy(datfile, ".\\worlds\\");
+	strcat(datfile, filename);
 }
 
 int displayFiles(void) {
