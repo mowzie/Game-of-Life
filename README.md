@@ -8,7 +8,7 @@ Game-of-Life
 
 * The "Please choose a file" option is really bare-bones and requires the user to fully type out one of the listed options.  It'd be better to have numbers by each filename that can be entered instead to choose a file.  Or even better, an arrow pointing to the first file listed and then use the arrow keys to move up and down the options and press Enter to choose one.
 
-* When hitting a key to advance the generation, there's an underscore char that zooms down the screen.  It'd be good to remove this.
+* ~~When hitting a key to advance the generation, there's an underscore char that zooms down the screen.  It'd be good to remove this.~~
 
 * Pressing Esc to quit a simulation exits the whole program.  It'd be better if it returned you back to the main menu instead.
 
