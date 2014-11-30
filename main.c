@@ -1,53 +1,55 @@
-#include <conio.h>  //getch && kbhit
+#include <conio.h>		//getch && kbhit
 #include <stdio.h>
 #include <stdlib.h>
+#include <Windows.h>	//for setting window sizes and moving to console locations
 #include "datfile.h"
 #include "applyRules.h"
-#include <Windows.h> //for setting window sizes
-#include <dirent.h>  //for listening directory contents
+#include "dirent.h"		//for listing directory contents
 #include "globals.h"
 
-
-void displayMenu();
+int displayFiles(void);
+void displayMenu(void);
+int displayRunningMenu(void);
+int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]);
 
 int main(void) {
-    char filename[FILENAME_MAX];        //TODO:  this should go to a seperate function
-	char gridA[ROWS][COLS];             //
+	char filename[FILENAME_MAX];		//TODO:  this should go to a seperate function
+	char gridA[ROWS][COLS];				//
 	char gridB[ROWS][COLS];
-   	char (*gridPtrCurr)[COLS] = NULL;   //
-	char (*gridPtrNext)[COLS] = NULL;   //
-	char (*tmpPtr)[COLS] = NULL;        //
-	char ch = ' ';                      //getch holder when running 
-	char datfile[FILENAME_MAX];      //starting world
-	int quit = 0;                       //"bool" to show start screen
-    int count = 0;                      //generation counter
-    int i = 0;
-    int j = 0;
+	char (*gridPtrCurr)[COLS] = NULL;	//
+	char (*gridPtrNext)[COLS] = NULL;	//
+	char (*tmpPtr)[COLS] = NULL;		//
+	char ch = ' ';						//getch holder when running
+	char datfile[FILENAME_MAX];			//starting world
+	int quit = 0;						//"bool" to show start screen
+	int count = 0;						//generation counter
+	int i = 0;
+	int j = 0;
 
     ////Windows.h call:  set the window size when it loads so we can see everything
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS+3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
     //
-        for (i = 0; i < ROWS; i++)
-    {
-        for(j = 0; j < COLS; j++)
-        {
-            gridA[i][j] = ' ';
-            gridB[i][j] = ' ';
-        }
-    }
-    strcpy(datfile, ".\\worlds\\welcome.txt");
+	for (i = 0; i < ROWS; i++)
+	{
+		for(j = 0; j < COLS; j++)
+		{
+			gridA[i][j] = ' ';
+			gridB[i][j] = ' ';
+		}
+	}
+	strcpy(datfile, ".\\worlds\\welcome.txt");
     
-    readDatFile(datfile, gridA, ROWS);
+	readDatFile(datfile, gridA, ROWS);
 	gridPtrCurr = gridA;
 	gridPtrNext = gridB;
-    printGrid(gridPtrCurr, gridPtrNext);
-    puts("");
+	printGrid(gridPtrCurr, gridPtrNext);
+	puts("");
     
-    displayMenu();
-    gotoxy(0,0);
+	displayMenu();
+	gotoxy(0,0);
     
-    _sleep(3500);  //this currently blocks UI, Fix this
+	_sleep(3500);  //this currently blocks UI, Fix this
 
 //Should we put the game logic in its own function outside of MAIN?
 //that way we can call it whenever/however we want  (such as restarting, etc)
@@ -124,7 +126,6 @@ int main(void) {
     count = 0;
 	displayRunningMenu();
     do {
-        
         gotoxy(COLS-9,ROWS+1);
         printf("Gen: %4d", count++);
         //setEqualTo(gridPtrCurr, gridPtrNext, ROWS);
@@ -141,9 +142,7 @@ int main(void) {
 	return EXIT_SUCCESS;
 }
 
-
-
-int displayFiles()
+int displayFiles(void)
 {
     DIR *d;
     struct dirent *dir;
@@ -165,7 +164,7 @@ int displayFiles()
     return EXIT_SUCCESS;
 }
 
-void displayMenu()
+void displayMenu(void)
 {
     int i = 0;
     gotoxy(0, ROWS);
@@ -174,7 +173,8 @@ void displayMenu()
     gotoxy(0, ROWS+1);
     printf("(Q)uit\t(L)oad World\t(C)reate World\t(R)andomize a world");
 }
-int displayRunningMenu()
+
+int displayRunningMenu(void)
 {
     int count = 0;
     gotoxy(0, ROWS+1);
