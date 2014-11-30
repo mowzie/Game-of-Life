@@ -36,7 +36,7 @@ int main(void) {
 			gridB[i][j] = ' ';
 		}
 	}
-	strcpy(datfile, ".\\worlds\\welcome.txt");
+	strcpy(datfile, ".\\worlds\\welcome.dat");
     
 	readDatFile(datfile, gridA, ROWS);
 	gridPtrCurr = gridA;
@@ -52,7 +52,7 @@ int main(void) {
 	//Should we put the game logic in its own function outside of MAIN?
 	//that way we can call it whenever/however we want  (such as restarting, etc)
 	while (!quit) {
-		if (count == 170) { //When welcome.txt becomes stagnent, start it over
+		if (count == 170) { //When welcome.dat becomes stagnent, start it over
             count = 0;
             readDatFile(datfile, gridA, ROWS);
             printGrid(gridPtrCurr, gridPtrNext);
@@ -77,7 +77,7 @@ int main(void) {
 
             case 'c': //TODO: Prompt for a name to save as
                 system("cls");
-                strcpy(datfile, ".\\worlds\\new.txt");
+                strcpy(datfile, ".\\worlds\\new.dat");
                 createDatFile(datfile);
                 quit = 1;
                 break;
@@ -88,8 +88,8 @@ int main(void) {
 				break;
 
             case 'r':
-            	createRandDatFile("worlds/datfile.txt");
-                strcpy(datfile, ".\\worlds\\datfile.txt");
+            	createRandDatFile("worlds/datfile.dat");
+                strcpy(datfile, ".\\worlds\\datfile.dat");
                 quit = 1;
                 break;
 
@@ -147,7 +147,7 @@ int displayFiles(void) {
     d = opendir("./worlds/");
     if (d) {
         while ((dir = readdir(d)) != NULL) {
-            if ((strstr(dir->d_name, ".txt")) || (strstr(dir->d_name, ".dat")))
+            if (strstr(dir->d_name, ".dat"))
             printf("%s\n", dir->d_name);
         }
         closedir(d);
