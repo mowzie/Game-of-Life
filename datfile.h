@@ -16,8 +16,8 @@
 
 // Struct to store the current location as x, y coordinates
 struct Location {
-	int x;
-	int y;
+    int x;
+    int y;
 };
 
 //---------------------------------------------------------
