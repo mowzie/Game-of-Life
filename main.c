@@ -176,17 +176,17 @@ int displayRunningMenu(void) {
     return 1;
 }
 
-int printGrid(const char gridCurr[][COLS],const char gridNext[][COLS]) {
+int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
 	int i = 0, j = 0;
-    char ch = ' ';
-	
-    for (i = 0; i < ROWS; i++) {
-		for (j = 0; j < COLS; j++) {
-                gotoxy(j,i);	//(x) columns, (y)row
-                printf("%c", gridCurr[i][j]);
-        }
-	}
-    gotoxy(COLS, ROWS);
+	char ch = ' ';
 
-    return EXIT_SUCCESS;
+	for (i = 0; i < ROWS; i++) {
+		for (j = 0; j < COLS; j++) {
+			gotoxy(j, i);	//(x) columns, (y)row
+			printf("%c", gridCurr[i][j]);
+		}
+	}
+	gotoxy(COLS, ROWS);
+
+	return EXIT_SUCCESS;
 }
