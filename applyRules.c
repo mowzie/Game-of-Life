@@ -3,8 +3,17 @@
 #include "applyRules.h"
 #include "globals.h"
 
+void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
+	int i, j = 0;
+	
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < COLS; j++) {
+			gridNext[i][j] = gridCurr[i][j];
+		}
+	}
+}
+
 void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
-    
 	int i, j = 0;
 	int neighbors = 0;
 
@@ -58,27 +67,6 @@ void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
 				if (neighbors < 2 || neighbors > 3)
 					gridNext[i][j] = ' ';	// The organism dies at this location
 			}
-		}
-	}
-}
-
-//void printGrid(char gridCurr[][COLS], int rows) {
-//	int i, j = 0;
-//
-//	for (i = 0; i < rows; i++) {
-//		for (j = 0; j < COLS; j++) {
-//			printf("%c", gridCurr[i][j]);
-//		}
-//		puts("");
-//	}
-//}
-
-void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
-	int i, j = 0;
-
-	for (i = 0; i < rows; i++) {
-		for (j = 0; j < COLS; j++) {
-			gridNext[i][j] = gridCurr[i][j];
 		}
 	}
 }

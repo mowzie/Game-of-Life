@@ -54,12 +54,10 @@
 //			12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(int x, int y) {
-    
 	COORD coord;
-    coord.X = x;
+	coord.X = x;
 	coord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-    
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);  
 }
 
 //---------------------------------------------------------
@@ -177,8 +175,8 @@ void createDatFile(const char* filename) {
 
 	outFileH = fopen(filename, "w");
 	if (!outFileH) {
-		printf("\n*** Error! Could not open input file: \"%s\" ***\n\n"
-			   "Press any key to continue.", filename);
+	printf("\n*** Error! Could not open input file: \"%s\" ***\n\n"
+			"Press any key to continue.", filename);
 		getch();
 		exit(EXIT_FAILURE);
 	}
@@ -328,8 +326,7 @@ void readDatFile(const char* filename, char grid[][COLS], int rows) {
 
 	// process input
 	while (fscanf(inFileH, "%d,%d", &i, &j) != EOF) {
-		// Set coord of i, j to *
-		grid[i][j] = '*';
+		grid[i][j] = '*';	// Set coord of i, j to *
 	}
 
 	fclose(inFileH);

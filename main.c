@@ -14,11 +14,11 @@ int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]);
 
 int main(void) {
 	char filename[FILENAME_MAX];		//TODO:  this should go to a seperate function
-	char gridA[ROWS][COLS];				//
+	char gridA[ROWS][COLS];				//create two arrays for the current and next state
 	char gridB[ROWS][COLS];
-	char (*gridPtrCurr)[COLS] = NULL;	//
-	char (*gridPtrNext)[COLS] = NULL;	//
-	char (*tmpPtr)[COLS] = NULL;		//
+	char (*gridPtrCurr)[COLS] = NULL;	//pointer to the currently displayed array
+	char (*gridPtrNext)[COLS] = NULL;	//pointer to the next array to be used
+	char (*tmpPtr)[COLS] = NULL;		//temporary pointer used for pointer swap
 	char ch = ' ';						//getch holder when running
 	char datfile[FILENAME_MAX];			//starting world
 	int quit = 0;						//"bool" to show start screen
@@ -26,9 +26,9 @@ int main(void) {
 	int i = 0;
 	int j = 0;
 
-    ////Windows.h call:  set the window size when it loads so we can see everything
-    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
-    SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
+	////Windows.h call:  set the window size when it loads so we can see everything
+	SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
+	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
 	for (i = 0; i < ROWS; i++) {
 		for(j = 0; j < COLS; j++) {
@@ -74,12 +74,14 @@ int main(void) {
             case 'q':
                 return EXIT_SUCCESS;
                 break;
+
             case 'c': //TODO: Prompt for a name to save as
                 system("cls");
                 strcpy(datfile, ".\\worlds\\new.txt");
                 createDatFile(datfile);
                 quit = 1;
                 break;
+
             case 'l':  //TODO:  Put this in a function Call
 				system("cls");
 				printf("Please choose a file\n");
@@ -91,16 +93,18 @@ int main(void) {
 					filename[strlen(filename) -1] = '\0';
 				else
 					while(getchar() != '\n')
-                        ;
+						;
 				strcpy(datfile, ".\\worlds\\");
 				strcat(datfile, filename);
-                quit = 1;
-                break;
+				quit = 1;
+				break;
+
             case 'r':
             	createRandDatFile("worlds/datfile.txt");
                 strcpy(datfile, ".\\worlds\\datfile.txt");
                 quit = 1;
                 break;
+
             default:
                 break;
             }
@@ -110,7 +114,7 @@ int main(void) {
 	readDatFile(datfile, gridA, ROWS);
 	gridPtrCurr = gridA;
 	gridPtrNext = gridB;
-    count = 0;
+	count = 0;
 	displayRunningMenu();
     do {
         gotoxy(COLS - 9, ROWS + 1);
@@ -168,7 +172,6 @@ int displayRunningMenu(void) {
         printf(" ");
     }
     printf("\nAny other key to advance generations");
-    //printf("(ESC) to quit\t(L)oad World\t(C)reate World\t(R)estart World\nAny other key to advance generations");
 
     return 1;
 }
@@ -179,7 +182,7 @@ int printGrid(const char gridCurr[][COLS],const char gridNext[][COLS]) {
 	
     for (i = 0; i < ROWS; i++) {
 		for (j = 0; j < COLS; j++) {
-                gotoxy(j,i); //(x) columns, (y)row
+                gotoxy(j,i);	//(x) columns, (y)row
                 printf("%c", gridCurr[i][j]);
         }
 	}
