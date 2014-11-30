@@ -183,13 +183,14 @@ int displayRunningMenu(void) {
 
 int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
     int i = 0, j = 0;
-    char ch = ' ';
+    gotoxy(0,0);
 
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             gotoxy(j, i);    //(x) columns, (y)row
             printf("%c", gridCurr[i][j]);
         }
+        puts("");
     }
     gotoxy(COLS, ROWS);
 
