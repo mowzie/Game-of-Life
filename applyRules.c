@@ -4,7 +4,7 @@
 #include "globals.h"
 
 void setEqualTo(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
-    int i, j = 0;
+    int i = 0, j = 0;
 
     for (i = 0; i < rows; i++) {
         for (j = 0; j < COLS; j++) {
@@ -14,7 +14,7 @@ void setEqualTo(const char gridCurr[][COLS], char gridNext[][COLS], const int ro
 }
 
 void applyRules(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
-    int i, j = 0;
+    int i = 0, j = 0;
     int neighbors = 0;
 
     setEqualTo(gridCurr, gridNext, ROWS);

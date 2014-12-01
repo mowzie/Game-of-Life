@@ -102,7 +102,7 @@ void gotoxy(const int x, const int y) {
 void createDatFile(const char* filename) {
     FILE* outFileH = NULL;
     char grid[ROWS][COLS] = {{0}};
-    int i, j = 0;
+    int i = 0, j = 0;
     int keyPress = 0;
     struct Location loc = {0, 0};
 

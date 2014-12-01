@@ -23,7 +23,7 @@ int main(void) {
     char ch = ' ';                      //getch holder when running
     int quit = 0;                       //"bool" to show start screen
     int count = 0;                      //generation counter
-    int i, j = 0;                       //loop vars
+    int i = 0, j = 0;                   //loop vars
 
     //Windows.h call: set the window size when it loads so we can see everything
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
@@ -182,7 +182,7 @@ int displayRunningMenu(void) {
 }
 
 int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
-    int i, j = 0;
+    int i = 0, j = 0;
     gotoxy(0,0);
 
     for (i = 0; i < ROWS; i++) {
