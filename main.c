@@ -7,7 +7,7 @@
 #include "dirent.h"     //for listing directory contents
 #include "globals.h"
 
-void loadFile(char* datfile);
+void enterFileName(char* datfile);
 int displayFiles(void);
 void displayMenu(void);
 int displayRunningMenu(void);
@@ -74,15 +74,19 @@ int main(void) {
                 return EXIT_SUCCESS;
                 break;
 
-            case 'c': //TODO: Prompt for a name to save as
+            case 'c':
                 system("cls");
-                strcpy(datfile, ".\\worlds\\new.dat");
+                printf("Please enter a name to save your new file\n");
+                enterFileName(datfile);
                 createDatFile(datfile);
                 quit = 1;
                 break;
 
             case 'l':
-                loadFile(datfile);
+                system("cls");
+                printf("Please choose a file\n");
+                displayFiles();
+                enterFileName(datfile);
                 quit = 1;
                 break;
 
@@ -122,12 +126,8 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
-void loadFile(char* datfile) {
+void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
-
-    system("cls");
-    printf("Please choose a file\n");
-    displayFiles();
 
     fgets(filename, FILENAME_MAX, stdin);
     if (filename[strlen(filename) - 1] == '\n') //remove newline
