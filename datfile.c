@@ -161,11 +161,11 @@ void createDatFile(const char* filename) {
                 if (++loc.x >= COLS) loc.x = COLS - 1;
                 break;
             case ' ':   // Toggle spot
-                if (grid[loc.y][loc.x] == '*') {  // x,y are reversed from ROWS, COLUMNS
-                    grid[loc.y][loc.x] = '-';
+                if (grid[loc.y][loc.x]) {  // loc.x, loc.y are reversed from ROWS, COLUMNS
+                    grid[loc.y][loc.x] = 0;
                     printf("%c", '-');
                 } else {
-                    grid[loc.y][loc.x] = '*';
+                    grid[loc.y][loc.x] = 1;
                     printf("%c", '*');
                 }
             }
@@ -184,7 +184,7 @@ void createDatFile(const char* filename) {
     // Write out dat file
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
-            if (grid[i][j] == '*') {
+            if (grid[i][j]) {
                 fprintf(outFileH, "%d,%d\n", i, j);
             }
         }
@@ -241,7 +241,7 @@ void createRandDatFile(const char* filename) {
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             if (rand() % 8 == 1) {    // Randomly choose one out of every 8
-                grid[i][j] = '*';
+                grid[i][j] = 1;
             }
         }
         puts("");
@@ -258,7 +258,7 @@ void createRandDatFile(const char* filename) {
     // Write out dat file
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
-            if (grid[i][j] == '*') {
+            if (grid[i][j]) {
                 fprintf(outFileH, "%d,%d\n", i, j);
             }
         }
@@ -326,7 +326,7 @@ void readDatFile(const char* filename, char grid[][COLS], const int rows) {
 
     // process input
     while (fscanf(inFileH, "%d,%d", &i, &j) != EOF) {
-        grid[i][j] = '*';    // Set coord of i, j to *
+        grid[i][j] = 1;    // Set coord of i, j to 1
     }
 
     fclose(inFileH);
