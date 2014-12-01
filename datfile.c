@@ -312,7 +312,7 @@ void readDatFile(const char* filename, char grid[][COLS], const int rows) {
     // Fill grid with blank spaces
     for (i = 0; i < rows; i++) {
         for (j = 0; j < COLS; j++) {
-            grid[i][j] = ' ';
+            grid[i][j] = 0;
         }
     }
 

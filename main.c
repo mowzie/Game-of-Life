@@ -15,8 +15,8 @@ int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]);
 
 int main(void) {
     char datfile[FILENAME_MAX];         //starting world filename
-    char gridA[ROWS][COLS];             //create two arrays for the current and next state
-    char gridB[ROWS][COLS];
+    char gridA[ROWS][COLS] = {{0}};     //create two arrays for the current and next state
+    char gridB[ROWS][COLS] = {{0}};
     char (*gridPtrCurr)[COLS] = NULL;   //pointer to the currently displayed array
     char (*gridPtrNext)[COLS] = NULL;   //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
@@ -29,12 +29,6 @@ int main(void) {
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
-    for (i = 0; i < ROWS; i++) {
-        for(j = 0; j < COLS; j++) {
-            gridA[i][j] = ' ';
-            gridB[i][j] = ' ';
-        }
-    }
     strcpy(datfile, ".\\worlds\\welcome.dat");
 
     readDatFile(datfile, gridA, ROWS);
