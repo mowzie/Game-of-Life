@@ -187,7 +187,6 @@ int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
 
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
-            gotoxy(j, i);    //(x) columns, (y)row
             printf("%c", gridCurr[i][j]);
         }
         puts("");
