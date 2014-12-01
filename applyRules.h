@@ -1,4 +1,4 @@
 #include "globals.h"
 
-void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows);
-void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows);
+void setEqualTo(const char gridCurr[][COLS], char gridNext[][COLS], const int rows);
+void applyRules(const char gridCurr[][COLS], char gridNext[][COLS], const int rows);

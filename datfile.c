@@ -53,7 +53,7 @@
 // History Log:
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void gotoxy(int x, int y) {
+void gotoxy(const int x, const int y) {
     COORD coord;
     coord.X = x;
     coord.Y = y;
@@ -305,8 +305,8 @@ void createRandDatFile(const char* filename) {
 // History Log:
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void readDatFile(const char* filename, char grid[][COLS], int rows) {
-    FILE* inFileH;
+void readDatFile(const char* filename, char grid[][COLS], const int rows) {
+    FILE* inFileH = NULL;
     int i, j = 0;
 
     // Fill grid with blank spaces

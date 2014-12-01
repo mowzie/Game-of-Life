@@ -3,7 +3,7 @@
 #include "applyRules.h"
 #include "globals.h"
 
-void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
+void setEqualTo(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
     int i, j = 0;
 
     for (i = 0; i < rows; i++) {
@@ -13,7 +13,7 @@ void setEqualTo(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
     }
 }
 
-void applyRules(char gridCurr[][COLS], char gridNext[][COLS], int rows) {
+void applyRules(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
     int i, j = 0;
     int neighbors = 0;
 

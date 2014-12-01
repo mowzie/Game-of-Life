@@ -58,7 +58,7 @@ struct Location {
 // History Log:
 //			12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void readDatFile(const char* filename, char gridCurr[][COLS], int rows);
+void readDatFile(const char* filename, char gridCurr[][COLS], const int rows);
 
 //---------------------------------------------------------
 // Function: createDatFile()
@@ -175,4 +175,4 @@ void createRandDatFile(const char* filename);
 // History Log:
 //			12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void gotoxy(int x, int y);
+void gotoxy(const int x, const int y);

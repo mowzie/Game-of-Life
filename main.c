@@ -23,10 +23,9 @@ int main(void) {
     char ch = ' ';                      //getch holder when running
     int quit = 0;                       //"bool" to show start screen
     int count = 0;                      //generation counter
-    int i = 0;
-    int j = 0;
+    int i, j = 0;                       //loop vars
 
-    ////Windows.h call:  set the window size when it loads so we can see everything
+    //Windows.h call: set the window size when it loads so we can see everything
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
@@ -104,6 +103,7 @@ int main(void) {
     gridPtrNext = gridB;
     count = 0;
     displayRunningMenu();
+
     do {
         gotoxy(COLS - 9, ROWS + 1);
         printf("Gen: %4d", count++);
@@ -182,7 +182,7 @@ int displayRunningMenu(void) {
 }
 
 int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
-    int i = 0, j = 0;
+    int i, j = 0;
     gotoxy(0,0);
 
     for (i = 0; i < ROWS; i++) {
