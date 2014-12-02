@@ -48,6 +48,7 @@ int main(void) {
             count = 0;
             readDatFile(datfile, gridA, ROWS);
             printGrid(gridPtrCurr);
+            _sleep(3500);  // TODO: this currently blocks UI, Fix this
         }
         printGrid(gridPtrCurr);
         applyRules(gridPtrCurr, gridPtrNext, ROWS);
