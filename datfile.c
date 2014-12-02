@@ -102,26 +102,28 @@ void gotoxy(const int x, const int y) {
 void createDatFile(const char* filename) {
     FILE* outFileH = NULL;
     char grid[ROWS][COLS] = {{0}};
-    int i = 0, j = 0;
+    int i, j = 0;
     int keyPress = 0;
     struct Location loc = {0, 0};
 
-    puts("Welcome to the gameoflife dat file creation tool!");
+    puts("Welcome to the Game-of-Life dat file creation tool!\n");
     puts("Use the arrow keys to move around the grid or use the wasd keys.");
     puts("Press the spacebar to toggle a spot on or off.");
     puts("When you're finished, press the Esc key to exit.");
-    printf("Your selections will be saved to the file, %s\n", filename);
+    printf("Your selections will be saved to the file, \"%s\"\n", filename);
     puts("\nPress any key to continue");
     getch();
-
-    // Draw blank grid to console
     system("cls");
-    for (i = 0; i < ROWS; i++) {
-        for (j = 0; j < COLS; j++) {
-            printf("-");
-        }
-        puts("");
+
+    // Draw menu
+    gotoxy(0, ROWS);
+    for (i = 0; i < COLS; i++) {
+        printf("-");
     }
+    gotoxy(0, ROWS + 1);
+    printf("Press (ESC) to exit");
+    gotoxy(0, ROWS + 2);
+    printf("Use the arrow keys (or wasd) to move. Press Spacebar to toggle a location");
 
     // Start in top left corner
     gotoxy(loc.x, loc.y);
@@ -162,7 +164,7 @@ void createDatFile(const char* filename) {
             case ' ':   // Toggle spot
                 if (grid[loc.y][loc.x]) {  // loc.x, loc.y are reversed from ROWS, COLUMNS
                     grid[loc.y][loc.x] = 0;
-                    printf("-");
+                    printf(" ");
                 } else {
                     grid[loc.y][loc.x] = 1;
                     printf("*");
@@ -190,6 +192,7 @@ void createDatFile(const char* filename) {
     }
 
     fclose(outFileH);
+    system("cls");
 }
 
 //---------------------------------------------------------

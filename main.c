@@ -69,9 +69,8 @@ int main(void) {
 
             case 'c':
                 system("cls");
-                printf("Please enter a name to save your new file\n");
                 enterFileName(datfile);
-                system("cls");
+                //system("cls");
                 createDatFile(datfile);
                 quit = 1;
                 break;
@@ -121,6 +120,10 @@ int main(void) {
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
 
+    printf("Please enter a filename to save as your new dat file.\n");
+    printf("Your filename must end with a '.dat' file extension.\n");
+    printf(">>> ");
+
     fgets(filename, FILENAME_MAX, stdin);   // TODO: ensure that filename ends in .dat
     if (filename[strlen(filename) - 1] == '\n') //remove newline
         filename[strlen(filename) - 1] = '\0';  //terminate string
@@ -129,6 +132,8 @@ void enterFileName(char* datfile) {
             ;
     strcpy(datfile, ".\\worlds\\");
     strcat(datfile, filename);  // TODO: check that we don't overflow datfile length
+
+    puts("");
 }
 
 int displayFiles(char* datfile) {
@@ -180,11 +185,11 @@ void displayRunningMenu(void) {
         printf("-");
     }
     gotoxy(0, ROWS + 1);
-    printf("(ESC) to quit");
+    printf("Press (ESC) to exit");
     for (i = 0; i < COLS; i++) {
         printf(" ");
     }
-    printf("\nAny other key to advance generations");
+    printf("\nPress any other key to advance generations");
 }
 
 void printGrid(const char gridCurr[][COLS]) {
