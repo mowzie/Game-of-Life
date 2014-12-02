@@ -6,6 +6,7 @@
 #include "applyRules.h"
 #include "dirent.h"     //for listing directory contents
 #include "globals.h"
+#define EXIT_APPLICATION -1
 
 void enterFileName(char* datfile);
 int displayFiles(char* datfile);
@@ -39,7 +40,7 @@ int main(void) {
     displayMenu();
     gotoxy(0,0);
 
-    _sleep(3500);  // TODO: this currently blocks UI, Fix this
+    _sleep(3);  // TODO: this currently blocks UI, Fix this
 
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
@@ -62,33 +63,10 @@ int main(void) {
 
         if (kbhit()) {
             ch = getch();
-            switch (tolower(ch)) {
-            case 'q':
-                return EXIT_SUCCESS;
-                break;
-
-            case 'c':
-                system("cls");
-                enterFileName(datfile);
-                //system("cls");
-                createDatFile(datfile);
-                quit = 1;
-                break;
-
-            case 'l':
-                system("cls");
-                displayFiles(datfile);  // TODO: check return value
-                quit = 1;
-                break;
-
-            case 'r':
-                createRandDatFile("worlds/random.dat");
-                strcpy(datfile, ".\\worlds\\random.dat");
-                quit = 1;
-                break;
-
-            default:
-                break;
+            quit = checkLoadScreenKeyPress(datfile, ch);
+            if (quit == EXIT_APPLICATION)
+            {
+                return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
             }
         }
     }
@@ -115,6 +93,41 @@ int main(void) {
     } while(ch != KEY_ESC);
 
     return EXIT_SUCCESS;
+}
+
+int checkLoadScreenKeyPress(char* datfile, char const ch)
+{
+    int boolQuit = 0;
+    switch (tolower(ch)) {
+    case 'q':
+        boolQuit = EXIT_APPLICATION;
+        break;
+
+    case 'c':
+        system("cls");
+        enterFileName(datfile);
+        //system("cls");
+        createDatFile(datfile);
+        boolQuit = 1;
+        break;
+
+    case 'l':
+        system("cls");
+        displayFiles(datfile);  // TODO: check return value
+        boolQuit = 1;
+        break;
+
+    case 'r':
+        createRandDatFile("worlds/random.dat");
+        strcpy(datfile, ".\\worlds\\random.dat");
+        boolQuit = 1;
+        break;
+
+    default:
+        boolQuit = 0;  //redundant
+        break;
+    }
+    return boolQuit;
 }
 
 void enterFileName(char* datfile) {
