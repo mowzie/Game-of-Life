@@ -114,12 +114,11 @@ void createDatFile(const char* filename) {
     puts("\nPress any key to continue");
     getch();
 
-    // Initialize all grid locations to dash and draw grid to console
+    // Draw blank grid to console
     system("cls");
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
-            grid[i][j] = '-';
-            printf("%c", '-');
+            printf("-");
         }
         puts("");
     }
@@ -163,10 +162,10 @@ void createDatFile(const char* filename) {
             case ' ':   // Toggle spot
                 if (grid[loc.y][loc.x]) {  // loc.x, loc.y are reversed from ROWS, COLUMNS
                     grid[loc.y][loc.x] = 0;
-                    printf("%c", '-');
+                    printf("-");
                 } else {
                     grid[loc.y][loc.x] = 1;
-                    printf("%c", '*');
+                    printf("*");
                 }
             }
         }
