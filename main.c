@@ -71,7 +71,6 @@ int main(void) {
             case 'c':
                 system("cls");
                 enterFileName(datfile);
-                //system("cls");
                 createDatFile(datfile);
                 quit = 1;
                 break;
