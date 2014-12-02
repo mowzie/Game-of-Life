@@ -309,7 +309,7 @@ void readDatFile(const char* filename, char grid[][COLS], const int rows) {
     FILE* inFileH = NULL;
     int i, j = 0;
 
-    // Fill grid with blank spaces
+    // init grid with 0
     for (i = 0; i < rows; i++) {
         for (j = 0; j < COLS; j++) {
             grid[i][j] = 0;
@@ -326,7 +326,7 @@ void readDatFile(const char* filename, char grid[][COLS], const int rows) {
 
     // process input
     while (fscanf(inFileH, "%d,%d", &i, &j) != EOF) {
-        grid[i][j] = 1;    // Set coord of i, j to 1
+        grid[i][j] = 1;
     }
 
     fclose(inFileH);
