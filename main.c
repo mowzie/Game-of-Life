@@ -13,6 +13,7 @@ int displayFiles(char* datfile);
 void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
+int checkLoadScreenKeyPress(char* datfile, char const ch);
 
 int main(void) {
     char datfile[FILENAME_MAX];         //starting world filename
@@ -49,6 +50,7 @@ int main(void) {
             count = 0;
             readDatFile(datfile, gridA, ROWS);
             printGrid(gridPtrCurr);
+            _sleep(3500);  // TODO: this currently blocks UI, Fix this
         }
         printGrid(gridPtrCurr);
         applyRules(gridPtrCurr, gridPtrNext, ROWS);
@@ -167,7 +169,7 @@ int displayFiles(char* datfile) {
             }
         }
         closedir(d);
-        printf("\nEnter the file number and press enter >>> ");
+        printf("\nEnter the file number and press Enter >>> ");
         fscanf(stdin, "%d", &filenum);  // TODO: Add error checking
         strcpy(datfile, ".\\worlds\\");
         strcat(datfile, filename[filenum - 1]);
