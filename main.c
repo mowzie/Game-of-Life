@@ -8,7 +8,7 @@
 #include "globals.h"
 
 void enterFileName(char* datfile);
-int displayFiles(void);
+int displayFiles(char* datfile);
 void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
@@ -78,9 +78,7 @@ int main(void) {
 
             case 'l':
                 system("cls");
-                printf("Please choose a file\n");
-                displayFiles();
-                enterFileName(datfile);
+                displayFiles(datfile);  // TODO: check return value
                 quit = 1;
                 break;
 
@@ -114,7 +112,7 @@ int main(void) {
         gridPtrCurr = gridPtrNext;
         gridPtrNext = tmpPtr;
 
-        ch = getch();
+        ch = getch();   // TODO: allow the user to let the simulation run until a key is pressed?
     } while(ch != KEY_ESC);
 
     return EXIT_SUCCESS;
@@ -133,19 +131,30 @@ void enterFileName(char* datfile) {
     strcat(datfile, filename);  // TODO: check that we don't overflow datfile length
 }
 
-int displayFiles(void) {
-    DIR* d;
-    struct dirent* dir;
+int displayFiles(char* datfile) {
+    int filenum = 0;
+    char filename[128][MAX_PATH];   // Array of strings to hold filenames
+    DIR* d = NULL;
+    struct dirent* dir = NULL;
 
-    d = opendir("./worlds/");   // TODO: Add error checking
+    printf("Please choose a file\n");
+    printf("---------------------\n\n");
+
+    d = opendir("./worlds/");
     if (d) {
         while ((dir = readdir(d)) != NULL) {
-            if (strstr(dir->d_name, ".dat"))
-            printf("%s\n", dir->d_name);
+            if (strstr(dir->d_name, ".dat")) {
+                strcpy(filename[filenum], dir->d_name);
+                printf("    %d: %s\n", ++filenum, dir->d_name);
+            }
         }
         closedir(d);
+        printf("\nEnter the file number and press enter >>> ");
+        fscanf(stdin, "%d", &filenum);  // TODO: Add error checking
+        strcpy(datfile, ".\\worlds\\");
+        strcat(datfile, filename[filenum]);
     } else {
-        printf("Could not open the directory");
+        fprintf(stderr, "Could not open the directory");
         return EXIT_FAILURE;
     }
 
@@ -176,14 +185,12 @@ void displayRunningMenu(void) {
         printf(" ");
     }
     printf("\nAny other key to advance generations");
-
-    return 1;
 }
 
 void printGrid(const char gridCurr[][COLS]) {
-    int i = 0, j = 0;
-    gotoxy(0,0);
+    int i, j = 0;
 
+    gotoxy(0,0);
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             (gridCurr[i][j]) ? printf("*") : printf(" ");
