@@ -10,8 +10,8 @@
 void enterFileName(char* datfile);
 int displayFiles(void);
 void displayMenu(void);
-int displayRunningMenu(void);
-int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]);
+void displayRunningMenu(void);
+void printGrid(const char gridCurr[][COLS]);
 
 int main(void) {
     char datfile[FILENAME_MAX];         //starting world filename
@@ -29,18 +29,17 @@ int main(void) {
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
-    strcpy(datfile, ".\\worlds\\welcome.dat");
-
+    strcpy(datfile, ".\\worlds\\welcome.dat");  // TODO: ensure that worlds dir exists
     readDatFile(datfile, gridA, ROWS);
     gridPtrCurr = gridA;
     gridPtrNext = gridB;
-    printGrid(gridPtrCurr, gridPtrNext);
+    printGrid(gridPtrCurr);
     puts("");
 
     displayMenu();
     gotoxy(0,0);
 
-    _sleep(3500);  //this currently blocks UI, Fix this
+    _sleep(3500);  // TODO: this currently blocks UI, Fix this
 
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
@@ -48,9 +47,9 @@ int main(void) {
         if (count == 170) { //When welcome.dat becomes stagnent, start it over
             count = 0;
             readDatFile(datfile, gridA, ROWS);
-            printGrid(gridPtrCurr, gridPtrNext);
+            printGrid(gridPtrCurr);
         }
-        printGrid(gridPtrCurr, gridPtrNext);
+        printGrid(gridPtrCurr);
         applyRules(gridPtrCurr, gridPtrNext, ROWS);
 
         // swap array pointers
@@ -86,8 +85,8 @@ int main(void) {
                 break;
 
             case 'r':
-                createRandDatFile("worlds/datfile.dat");
-                strcpy(datfile, ".\\worlds\\datfile.dat");
+                createRandDatFile("worlds/random.dat");
+                strcpy(datfile, ".\\worlds\\random.dat");
                 quit = 1;
                 break;
 
@@ -108,7 +107,7 @@ int main(void) {
         printf("Gen: %4d", count++);
 
         applyRules(gridPtrCurr, gridPtrNext, ROWS);
-        printGrid(gridPtrCurr, gridPtrNext);
+        printGrid(gridPtrCurr);
 
         // swap pointers
         tmpPtr = gridPtrCurr;
@@ -124,21 +123,21 @@ int main(void) {
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
 
-    fgets(filename, FILENAME_MAX, stdin);
+    fgets(filename, FILENAME_MAX, stdin);   // TODO: ensure that filename ends in .dat
     if (filename[strlen(filename) - 1] == '\n') //remove newline
         filename[strlen(filename) - 1] = '\0';  //terminate string
     else
         while (getchar() != '\n')
             ;
     strcpy(datfile, ".\\worlds\\");
-    strcat(datfile, filename);
+    strcat(datfile, filename);  // TODO: check that we don't overflow datfile length
 }
 
 int displayFiles(void) {
     DIR* d;
     struct dirent* dir;
 
-    d = opendir("./worlds/");
+    d = opendir("./worlds/");   // TODO: Add error checking
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (strstr(dir->d_name, ".dat"))
@@ -157,18 +156,23 @@ void displayMenu(void) {
     int i = 0;
 
     gotoxy(0, ROWS);
-    for(i = 0; i < COLS; i++)
+    for (i = 0; i < COLS; i++) {
         printf("-");
+    }
     gotoxy(0, ROWS + 1);
     printf("(Q)uit\t(L)oad World\t(C)reate World\t(R)andomize a world");
 }
 
-int displayRunningMenu(void) {
-    int count = 0;
+void displayRunningMenu(void) {
+    int i = 0;
 
+    gotoxy(0, ROWS);
+    for (i = 0; i < COLS; i++) {
+        printf("-");
+    }
     gotoxy(0, ROWS + 1);
     printf("(ESC) to quit");
-    for (count = 0; count < COLS; count++) {
+    for (i = 0; i < COLS; i++) {
         printf(" ");
     }
     printf("\nAny other key to advance generations");
@@ -176,7 +180,7 @@ int displayRunningMenu(void) {
     return 1;
 }
 
-int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
+void printGrid(const char gridCurr[][COLS]) {
     int i = 0, j = 0;
     gotoxy(0,0);
 
@@ -187,6 +191,4 @@ int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
         puts("");
     }
     gotoxy(COLS, ROWS);
-
-    return EXIT_SUCCESS;
 }
