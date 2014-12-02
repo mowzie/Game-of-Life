@@ -182,7 +182,11 @@ int printGrid(const char gridCurr[][COLS], const char gridNext[][COLS]) {
 
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
-            printf("%c", gridCurr[i][j]);
+			if (gridCurr[i][j]) {
+				printf("*");
+			} else {
+                printf(" ");
+			}
         }
         puts("");
     }
