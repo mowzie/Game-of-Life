@@ -152,7 +152,7 @@ int displayFiles(char* datfile) {
         printf("\nEnter the file number and press enter >>> ");
         fscanf(stdin, "%d", &filenum);  // TODO: Add error checking
         strcpy(datfile, ".\\worlds\\");
-        strcat(datfile, filename[filenum]);
+        strcat(datfile, filename[filenum - 1]);
     } else {
         fprintf(stderr, "Could not open the directory");
         return EXIT_FAILURE;
