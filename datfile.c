@@ -102,7 +102,8 @@ void gotoxy(const int x, const int y) {
 void createDatFile(const char* filename) {
     FILE* outFileH = NULL;
     char grid[ROWS][COLS] = {{0}};
-    int i, j = 0;
+    int i = 0;
+    int j = 0;
     int keyPress = 0;
     struct Location loc = {0, 0};
 
@@ -234,7 +235,8 @@ void createDatFile(const char* filename) {
 void createRandDatFile(const char* filename) {
     FILE* outFileH = NULL;
     char grid[ROWS][COLS] = {{0}};
-    int i, j = 0;
+    int i = 0;
+    int j = 0;
 
     // Seed random number generator with the current time
     srand(time(NULL));
@@ -309,7 +311,8 @@ void createRandDatFile(const char* filename) {
 //---------------------------------------------------------
 void readDatFile(const char* filename, char grid[][COLS], const int rows) {
     FILE* inFileH = NULL;
-    int i, j = 0;
+    int i = 0;
+    int j = 0;
 
     // init grid with 0
     for (i = 0; i < rows; i++) {
