@@ -4,7 +4,7 @@ Game-of-Life
 # Remaning Work
 
 
-* When you first launch the app and select a menu option, there's a 2-3 second lag before it responds.  It'd be good to remove this lag.
+* ~~When you first launch the app and select a menu option, there's a 2-3 second lag before it responds.  It'd be good to remove this lag.~~
 
 * ~~The "Please choose a file" option is really bare-bones and requires the user to fully type out one of the listed options.  It'd be better to have numbers by each filename that can be entered instead to choose a file.  Or even better, an arrow pointing to the first file listed and then use the arrow keys to move up and down the options and press Enter to choose one.~~
 

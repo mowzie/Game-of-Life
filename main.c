@@ -15,6 +15,7 @@ void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
 int checkLoadScreenKeyPress(char* datfile, char const ch);
+int loadScreenSleep();
 
 const char* dirprefix = ".\\worlds\\";
 
@@ -31,7 +32,7 @@ int main(void) {
 		{ 0, 0, 1, 1, 0, 0, 0, 0, 0 }	//Survival Rules
 	};
     char ch = ' ';                      //getch holder when running
-    int quit = FALSE;                       //"bool" to show start screen
+    int quitLoadScreen = FALSE;                       //"bool" to show start screen
     int count = 0;                      //generation counter
     int i = 0;                          //loop vars
     int j = 0;
@@ -51,16 +52,18 @@ int main(void) {
     displayMenu();
     gotoxy(0,0);
 
-    _sleep(35);  // TODO: this currently blocks UI, Fix this
-
+    quitLoadScreen = loadScreenSleep();
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
-    while (!quit) {
+    if (quitLoadScreen) {
+        checkLoadScreenKeyPress(datfile, quitLoadScreen);
+    } else {
+    while (!quitLoadScreen) {
         if (count == 170) { //When welcome.dat becomes stagnent, start it over
             count = 0;
             readDatFile(datfile, gridA, ROWS);
             printGrid(gridPtrCurr);
-            _sleep(3500);  // TODO: this currently blocks UI, Fix this
+            quitLoadScreen = loadScreenSleep();
         }
         printGrid(gridPtrCurr);
         applyRule(gridPtrCurr, gridPtrNext, rule);
@@ -75,11 +78,12 @@ int main(void) {
 
         if (kbhit()) {
             ch = getch();
-            quit = checkLoadScreenKeyPress(datfile, ch);
-            if (quit == EXIT_APPLICATION) {
+            quitLoadScreen = checkLoadScreenKeyPress(datfile, ch);
+            if (quitLoadScreen == EXIT_APPLICATION) {
                 return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
             }
         }
+    }
     }
 
     readDatFile(datfile, gridA, ROWS);
@@ -103,6 +107,18 @@ int main(void) {
         ch = getch();   // TODO: allow the user to let the simulation run until a key is pressed?
     } while(ch != KEY_ESC);
 
+    return EXIT_SUCCESS;
+}
+
+int loadScreenSleep() {
+    int i = 0;
+    char ch = ' ';
+    for(i = 0; i < 1000; i++)
+    {
+        if (kbhit())
+             return getch();
+        _sleep(1);
+    }
     return EXIT_SUCCESS;
 }
 
