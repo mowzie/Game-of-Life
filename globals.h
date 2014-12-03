@@ -5,3 +5,5 @@
 #define	ARROW_DOWN 80
 #define	ARROW_LEFT 75
 #define	ARROW_RIGHT 77
+#define TRUE 1
+#define FALSE 0
