@@ -68,6 +68,7 @@ int main(void) {
 }
 
 int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS], int rule[2][9] ) {
+<<<<<<< HEAD
     char ch = ' ';
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;
@@ -76,7 +77,6 @@ int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][CO
     strcat(datfile, "welcome.dat");
     readDatFile(datfile, gridPtrCurr, ROWS);
     printGrid(gridPtrCurr);
-
     displayMenu();
     gotoxy(0,0);
     quitLoadScreen = loadScreenSleep();
