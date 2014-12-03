@@ -6,7 +6,7 @@
 #include "datfile.h"
 #include "menu.h"
 
-const char* dirprefix = ".\\worlds\\";
+extern const char* dirprefix = ".\\worlds\\";
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
 
