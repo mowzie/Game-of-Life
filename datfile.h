@@ -1,3 +1,5 @@
+#ifndef DATFILE_H
+#define DATFILE_H 1
 //---------------------------------------------------------
 // File: datfile.h
 //
@@ -8,10 +10,10 @@
 //			gotoxy()
 //---------------------------------------------------------
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "applyRules.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
+#include "globals.h"
 #pragma warning(disable: 4996)
 
 // Struct to store the current location as x, y coordinates
@@ -176,3 +178,4 @@ void createRandDatFile(const char* filename);
 //			12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(const int x, const int y);
+#endif

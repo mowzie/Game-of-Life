@@ -13,7 +13,6 @@
 #include <windows.h>
 #include <time.h>
 #include "datfile.h"
-#include "applyRules.h"
 #include "globals.h"
 
 

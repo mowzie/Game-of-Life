@@ -1,3 +1,6 @@
+#ifndef GLOBALS_H
+#define GLOBALS_H 1
+
 #define ROWS 24
 #define COLS 79
 #define	KEY_ESC 27
@@ -7,3 +10,4 @@
 #define	ARROW_RIGHT 77
 #define TRUE 1
 #define FALSE 0
+#endif
