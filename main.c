@@ -9,11 +9,14 @@
 #define EXIT_APPLICATION -1
 
 void enterFileName(char* datfile);
+int hasDatExt(const char* filename);
 int displayFiles(char* datfile);
 void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
 int checkLoadScreenKeyPress(char* datfile, char const ch);
+
+const char* dirprefix = ".\\worlds\\";
 
 int main(void) {
     char datfile[FILENAME_MAX];         //starting world filename
@@ -32,7 +35,8 @@ int main(void) {
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
-    strcpy(datfile, ".\\worlds\\welcome.dat");  // TODO: ensure that worlds dir exists
+    strcpy(datfile, dirprefix);
+    strcat(datfile, "welcome.dat");  // TODO: ensure that worlds dir exists
     readDatFile(datfile, gridA, ROWS);
     gridPtrCurr = gridA;
     gridPtrNext = gridB;
@@ -42,7 +46,7 @@ int main(void) {
     displayMenu();
     gotoxy(0,0);
 
-    _sleep(3);  // TODO: this currently blocks UI, Fix this
+    _sleep(3500);  // TODO: this currently blocks UI, Fix this
 
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
@@ -67,8 +71,7 @@ int main(void) {
         if (kbhit()) {
             ch = getch();
             quit = checkLoadScreenKeyPress(datfile, ch);
-            if (quit == EXIT_APPLICATION)
-            {
+            if (quit == EXIT_APPLICATION) {
                 return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
             }
         }
@@ -98,18 +101,17 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
-int checkLoadScreenKeyPress(char* datfile, char const ch)
-{
+int checkLoadScreenKeyPress(char* datfile, const char ch) {
     int boolQuit = 0;
+
     switch (tolower(ch)) {
-    case 'q':
+    case 27:    // ESC key
         boolQuit = EXIT_APPLICATION;
         break;
 
     case 'c':
         system("cls");
         enterFileName(datfile);
-        //system("cls");
         createDatFile(datfile);
         boolQuit = 1;
         break;
@@ -121,8 +123,9 @@ int checkLoadScreenKeyPress(char* datfile, char const ch)
         break;
 
     case 'r':
-        createRandDatFile("worlds/random.dat");
-        strcpy(datfile, ".\\worlds\\random.dat");
+        strcpy(datfile, dirprefix);
+        strcat(datfile, "random.dat");
+        createRandDatFile(datfile);
         boolQuit = 1;
         break;
 
@@ -136,32 +139,42 @@ int checkLoadScreenKeyPress(char* datfile, char const ch)
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
 
-    printf("Please enter a filename to save as your new dat file.\n");
-    printf("Your filename must end with a '.dat' file extension.\n");
-    printf(">>> ");
+    printf("Please enter a filename to save as your new dat file.");
 
-    fgets(filename, FILENAME_MAX, stdin);   // TODO: ensure that filename ends in .dat
-    if (filename[strlen(filename) - 1] == '\n') //remove newline
-        filename[strlen(filename) - 1] = '\0';  //terminate string
-    else
-        while (getchar() != '\n')
-            ;
-    strcpy(datfile, ".\\worlds\\");
-    strcat(datfile, filename);  // TODO: check that we don't overflow datfile length
+    do {
+        printf("\nYour filename must end with a '.dat' file extension.\n");
+        printf(">>> ");
+
+        fgets(filename, FILENAME_MAX, stdin);
+        if (filename[strlen(filename) - 1] == '\n') //remove newline
+            filename[strlen(filename) - 1] = '\0';  //terminate string
+        else
+            while (getchar() != '\n')
+                ;
+    // Verify that the file ends in .dat and isn't too long for the datfile buffer
+    } while (!hasDatExt(filename) && (strlen(filename) < sizeof(datfile)-strlen(dirprefix)));
+
+    strcpy(datfile, dirprefix);
+    strcat(datfile, filename);
 
     puts("");
 }
 
+int hasDatExt(const char* filename) {
+    size_t len = strlen(filename);
+    return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
+}
+
 int displayFiles(char* datfile) {
-    int filenum = 0;
+    unsigned int filenum = 0;
     char filename[128][MAX_PATH];   // Array of strings to hold filenames
     DIR* d = NULL;
     struct dirent* dir = NULL;
 
     printf("Please choose a file\n");
-    printf("---------------------\n\n");
+    printf("--------------------\n\n");
 
-    d = opendir("./worlds/");
+    d = opendir(dirprefix);
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (strstr(dir->d_name, ".dat")) {
@@ -171,8 +184,12 @@ int displayFiles(char* datfile) {
         }
         closedir(d);
         printf("\nEnter the file number and press Enter >>> ");
-        fscanf(stdin, "%d", &filenum);  // TODO: Add error checking
-        strcpy(datfile, ".\\worlds\\");
+        while (fscanf(stdin, "%d", &filenum) != 1) {
+            while (getchar() != '\n')
+                ;
+            printf("Enter the file number and press Enter >>> ");
+        }
+        strcpy(datfile, dirprefix);
         strcat(datfile, filename[filenum - 1]);
     } else {
         fprintf(stderr, "Could not open the directory");
@@ -190,7 +207,7 @@ void displayMenu(void) {
         printf("-");
     }
     gotoxy(0, ROWS + 1);
-    printf("(Q)uit\t(L)oad World\t(C)reate World\t(R)andomize a world");
+    printf("Press (ESC) to exit\t(L)oad World\t(C)reate World\t(R)andom World");
 }
 
 void displayRunningMenu(void) {
