@@ -12,8 +12,8 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+#include "dirent.h"     //for listing directory contents
 #include "datfile.h"
-#include "globals.h"
 
 
 //---------------------------------------------------------
@@ -104,6 +104,7 @@ void createDatFile(const char* filename) {
     int keyPress = 0;
     struct Location loc = {0, 0};
 
+    system("cls");
     puts("Welcome to the Game-of-Life dat file creation tool!\n");
     puts("Use the arrow keys to move around the grid or use the wasd keys.");
     puts("Press the spacebar to toggle a spot on or off.");
@@ -332,4 +333,72 @@ void readDatFile(const char* filename, char grid[][COLS], const int rows) {
     }
 
     fclose(inFileH);
+}
+
+void enterFileName(char* datfile) {
+    char filename[FILENAME_MAX];
+
+    system("cls");
+    printf("Please enter a filename to save as your new dat file.");
+
+    do {
+        printf("\nYour filename must end with a '.dat' file extension.\n");
+        printf(">>> ");
+
+        fgets(filename, FILENAME_MAX, stdin);
+        if (filename[strlen(filename) - 1] == '\n') //remove newline
+            filename[strlen(filename) - 1] = '\0';  //terminate string
+        else
+        while (getchar() != '\n')
+            ;
+        // Verify that the file ends in .dat and isn't too long for the datfile buffer
+    } while (!hasDatExt(filename) && (strlen(filename) < sizeof(datfile)-strlen(dirprefix)));
+
+    strcpy(datfile, dirprefix);
+    strcat(datfile, filename);
+
+    puts("");
+}
+
+int hasDatExt(const char* filename) {
+    size_t len = strlen(filename);
+    return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
+}
+
+int displayFiles(char* datfile) {
+    unsigned int filenum = 0;
+    char filename[128][MAX_PATH];   // Array of strings to hold filenames
+    DIR* d = NULL;
+    struct dirent* dir = NULL;
+
+    system("cls");
+    printf("Please choose a file\n");
+    printf("--------------------\n\n");
+
+    d = opendir(dirprefix);
+    if (d) {
+        while ((dir = readdir(d)) != NULL) {
+            if (strstr(dir->d_name, ".dat")) {
+                strcpy(filename[filenum], dir->d_name);
+                printf("    %d: %s\n", ++filenum, dir->d_name);
+            }
+        }
+        closedir(d);
+        printf("\nEnter the file number and press Enter >>> ");
+        while (fscanf(stdin, "%d", &filenum) != 1) {
+            while (getchar() != '\n')
+                ;
+            printf("Enter the file number and press Enter >>> ");
+        }
+        while (getchar() != '\n')
+            ;
+        strcpy(datfile, dirprefix);
+        strcat(datfile, filename[filenum - 1]);
+    }
+    else {
+        fprintf(stderr, "Could not open the directory");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }

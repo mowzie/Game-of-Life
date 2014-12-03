@@ -11,8 +11,7 @@
 //            gotoxy()
 //---------------------------------------------------------
 
-#include "globals.h"
-#pragma warning(disable: 4996)
+#include "gameoflife.h"
 
 // Struct to store the current location as x, y coordinates
 struct Location {
@@ -176,5 +175,11 @@ void createRandDatFile(const char* filename);
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(const int x, const int y);
+
+void enterFileName(char* datfile);
+
+int hasDatExt(const char* filename);
+
+int displayFiles(char* datfile);
 
 #endif

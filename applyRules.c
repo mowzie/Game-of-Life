@@ -1,4 +1,3 @@
-#include "globals.h"
 #include "applyRules.h"
 
 void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
