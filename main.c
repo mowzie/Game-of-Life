@@ -110,7 +110,7 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
     int boolQuit = 0;
 
     switch (tolower(ch)) {
-    case 27:    // ESC key
+    case KEY_ESC:    // ESC key
         boolQuit = EXIT_APPLICATION;
         break;
 
