@@ -3,7 +3,7 @@
 
 
 
-void applyRule(char gridCurr[][COLS], char gridNext[][COLS], int rule[2][9]) {
+void applyRule(const char gridCurr[][COLS], const char gridNext[][COLS],const int rule[2][9]) {
 	for (int y = 0; y != ROWS; y++) {
 		for (int x = 0; x != COLS; x++) {
 			gridNext[y][x] = rule[(gridCurr[y][x] == TRUE)][neighbors(x, y, gridCurr)];
