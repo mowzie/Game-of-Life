@@ -10,7 +10,7 @@
 
 void enterFileName(char* datfile);
 int hasDatExt(const char* filename);
-int displayFiles(char* datfile);
+void displayFiles(char* datfile);
 void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
@@ -36,7 +36,7 @@ int main(void) {
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
     strcpy(datfile, dirprefix);
-    strcat(datfile, "welcome.dat");  // TODO: ensure that worlds dir exists
+    strcat(datfile, "welcome.dat");
     readDatFile(datfile, gridA, ROWS);
     gridPtrCurr = gridA;
     gridPtrNext = gridB;
@@ -110,35 +110,28 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
         break;
 
     case 'c':
-        system("cls");
         enterFileName(datfile);
         createDatFile(datfile);
-        boolQuit = 1;
         break;
 
     case 'l':
-        system("cls");
-        displayFiles(datfile);  // TODO: check return value
-        boolQuit = 1;
+        displayFiles(datfile);
         break;
 
     case 'r':
         strcpy(datfile, dirprefix);
         strcat(datfile, "random.dat");
         createRandDatFile(datfile);
-        boolQuit = 1;
-        break;
-
-    default:
-        boolQuit = 0;  //redundant
         break;
     }
+
     return boolQuit;
 }
 
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
 
+    system("cls");
     printf("Please enter a filename to save as your new dat file.");
 
     do {
@@ -165,12 +158,13 @@ int hasDatExt(const char* filename) {
     return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
 }
 
-int displayFiles(char* datfile) {
+void displayFiles(char* datfile) {
     unsigned int filenum = 0;
     char filename[128][MAX_PATH];   // Array of strings to hold filenames
     DIR* d = NULL;
     struct dirent* dir = NULL;
 
+    system("cls");
     printf("Please choose a file\n");
     printf("--------------------\n\n");
 
