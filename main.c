@@ -31,7 +31,7 @@ int main(void) {
 		{ 0, 0, 1, 1, 0, 0, 0, 0, 0 }	//Survival Rules
 	};
     char ch = ' ';                      //getch holder when running
-    int quit = 0;                       //"bool" to show start screen
+    int quit = FALSE;                       //"bool" to show start screen
     int count = 0;                      //generation counter
     int i = 0;                          //loop vars
     int j = 0;
@@ -51,7 +51,7 @@ int main(void) {
     displayMenu();
     gotoxy(0,0);
 
-    _sleep(3500);  // TODO: this currently blocks UI, Fix this
+    _sleep(35);  // TODO: this currently blocks UI, Fix this
 
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
@@ -107,13 +107,12 @@ int main(void) {
 }
 
 int checkLoadScreenKeyPress(char* datfile, const char ch) {
-    int boolQuit = 0;
+    int boolQuit = TRUE;
 
     switch (tolower(ch)) {
-    case KEY_ESC:    // ESC key
+    case KEY_ESC:
         boolQuit = EXIT_APPLICATION;
         break;
-
     case 'c':
         enterFileName(datfile);
         createDatFile(datfile);
@@ -127,6 +126,9 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
         strcpy(datfile, dirprefix);
         strcat(datfile, "random.dat");
         createRandDatFile(datfile);
+        break;
+    default:
+        boolQuit = FALSE;
         break;
     }
 
