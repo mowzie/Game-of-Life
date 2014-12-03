@@ -61,33 +61,33 @@ int main(void) {
             gridPtrCurr = gridPtrNext;
             gridPtrNext = tmpPtr;
 
-            ch = getch();   // TODO: allow the user to let the simulation run until a key is pressed?
+            ch = getch();
         } while(ch != KEY_ESC);
     }
     return EXIT_SUCCESS;
 }
 
 int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS], int rule[2][9] ) {
-     char ch = ' ';
+    char ch = ' ';
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;
 
-    strcpy(datfile, dirprefix);        //Load in the Splash Screen
-    strcat(datfile, "welcome.dat");    //
-    readDatFile(datfile, gridPtrCurr, ROWS); //  
-    printGrid(gridPtrCurr);            //
+    strcpy(datfile, dirprefix);         //Load in the Splash Screen
+    strcat(datfile, "welcome.dat");
+    readDatFile(datfile, gridPtrCurr, ROWS);
+    printGrid(gridPtrCurr);
 
     displayMenu();
     gotoxy(0,0);
     quitLoadScreen = loadScreenSleep();
 
     if (quitLoadScreen == KEY_ESC) {
-        return EXIT_APPLICATION;  //user wanted to exit the app, so exit cleanly
-            }
+        return EXIT_APPLICATION;        //user wanted to exit the app, so exit cleanly
+    }
     quitLoadScreen = checkLoadScreenKeyPress(datfile, quitLoadScreen);
 
     while (!quitLoadScreen) {
-        if (count == 170) { //When welcome.dat becomes stagnent, start it over
+        if (count == 170) {             //When welcome.dat becomes stagnent, start it over
             count = 0;
             gotoxy(COLS - 9, ROWS + 1);
             printf("Gen: %4d", count);
@@ -120,7 +120,6 @@ int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][CO
 
 int loadScreenSleep() {
     int i = 0;
-    char ch = ' ';
 
     for(i = 0; i < 1000; i++) {
         if (kbhit())
