@@ -10,7 +10,7 @@ const char* dirprefix = ".\\worlds\\";
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
 
-int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS]) {
+int runLoadScreen(char* datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS]) {
     char ch = 0;
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;

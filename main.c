@@ -14,10 +14,7 @@ int main(void) {
     char (*gridPtrNext)[COLS] = gridB;  //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
     char ch = 0;                        //getch holder when running
-    int quit = 0;
-    int count = 0;                      //generation counter
-    int i = 0;                          //loop vars
-    int j = 0;
+    unsigned int count = 0;             //generation counter
 
     //windows.h call: set the window size when it loads so we can see everything
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
