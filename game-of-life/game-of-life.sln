@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game-of-life", "game-of-life\game-of-life.vcxproj", "{20B82130-B04D-41C2-B1C3-EF18562497AF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "datfile", "datfile\datfile.vcxproj", "{C8537EAB-C43A-4CAA-AFC0-E48E44B60DE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "applyrule", "applyrule\applyrule.vcxproj", "{71FEE685-9E45-4DC1-9615-8353A0477643}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20B82130-B04D-41C2-B1C3-EF18562497AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{20B82130-B04D-41C2-B1C3-EF18562497AF}.Debug|Win32.Build.0 = Debug|Win32
+		{20B82130-B04D-41C2-B1C3-EF18562497AF}.Release|Win32.ActiveCfg = Release|Win32
+		{20B82130-B04D-41C2-B1C3-EF18562497AF}.Release|Win32.Build.0 = Release|Win32
+		{C8537EAB-C43A-4CAA-AFC0-E48E44B60DE1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C8537EAB-C43A-4CAA-AFC0-E48E44B60DE1}.Debug|Win32.Build.0 = Debug|Win32
+		{C8537EAB-C43A-4CAA-AFC0-E48E44B60DE1}.Release|Win32.ActiveCfg = Release|Win32
+		{C8537EAB-C43A-4CAA-AFC0-E48E44B60DE1}.Release|Win32.Build.0 = Release|Win32
+		{71FEE685-9E45-4DC1-9615-8353A0477643}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71FEE685-9E45-4DC1-9615-8353A0477643}.Debug|Win32.Build.0 = Debug|Win32
+		{71FEE685-9E45-4DC1-9615-8353A0477643}.Release|Win32.ActiveCfg = Release|Win32
+		{71FEE685-9E45-4DC1-9615-8353A0477643}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
