@@ -27,7 +27,7 @@ int main(void) {
     char (*gridPtrNext)[COLS] = NULL;   //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
     char ch = ' ';                      //getch holder when running
-    int quitLoadScreen = FALSE;         //"bool" to show start screen
+    int quit = 0;
     int count = 0;                      //generation counter
     int i = 0;                          //loop vars
     int j = 0;
@@ -36,30 +36,62 @@ int main(void) {
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
-    strcpy(datfile, dirprefix);
-    strcat(datfile, "welcome.dat");
-    readDatFile(datfile, gridA, ROWS);
     gridPtrCurr = gridA;
     gridPtrNext = gridB;
-    printGrid(gridPtrCurr);
-    puts("");
+
+    while (TRUE) {
+        if (runLoadScreen(datfile,gridPtrCurr,gridPtrNext,tmpPtr,rule) == EXIT_APPLICATION)
+            return EXIT_SUCCESS;
+
+        readDatFile(datfile, gridA, ROWS); //reset game info
+        gridPtrCurr = gridA;               //
+        gridPtrNext = gridB;               //
+        count = 0;                         //
+        displayRunningMenu();
+
+        do {
+            gotoxy(COLS - 9, ROWS + 1);
+            printf("Gen: %4d", count++);
+
+            applyRule(gridPtrCurr, gridPtrNext, rule);
+            printGrid(gridPtrCurr);
+
+            // swap pointers
+            tmpPtr = gridPtrCurr;
+            gridPtrCurr = gridPtrNext;
+            gridPtrNext = tmpPtr;
+
+            ch = getch();   // TODO: allow the user to let the simulation run until a key is pressed?
+        } while(ch != KEY_ESC);
+    }
+    return EXIT_SUCCESS;
+}
+
+int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS], int rule[2][9] ) {
+     char ch = ' ';
+    int quitLoadScreen = FALSE;         //"bool" to show start screen
+    int count = 0;
+
+    strcpy(datfile, dirprefix);        //Load in the Splash Screen
+    strcat(datfile, "welcome.dat");    //
+    readDatFile(datfile, gridPtrCurr, ROWS); //  
+    printGrid(gridPtrCurr);            //
 
     displayMenu();
     gotoxy(0,0);
-
     quitLoadScreen = loadScreenSleep();
-    //Should we put the game logic in its own function outside of MAIN?
-    //that way we can call it whenever/however we want  (such as restarting, etc)
-    if (quitLoadScreen) {
-        if (quitLoadScreen == KEY_ESC) {
-                return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
+
+    if (quitLoadScreen == KEY_ESC) {
+        return EXIT_APPLICATION;  //user wanted to exit the app, so exit cleanly
             }
-        checkLoadScreenKeyPress(datfile, quitLoadScreen);
-    } else {
+    quitLoadScreen = checkLoadScreenKeyPress(datfile, quitLoadScreen);
+
     while (!quitLoadScreen) {
         if (count == 170) { //When welcome.dat becomes stagnent, start it over
             count = 0;
-            readDatFile(datfile, gridA, ROWS);
+            gotoxy(COLS - 9, ROWS + 1);
+            printf("Gen: %4d", count);
+            readDatFile(datfile, gridPtrCurr, ROWS);
             printGrid(gridPtrCurr);
             quitLoadScreen = loadScreenSleep();
         }
@@ -78,44 +110,24 @@ int main(void) {
             ch = getch();
             quitLoadScreen = checkLoadScreenKeyPress(datfile, ch);
             if (quitLoadScreen == EXIT_APPLICATION) {
-                return EXIT_SUCCESS;
+                return EXIT_APPLICATION;
             }
         }
     }
-    }
 
-    readDatFile(datfile, gridA, ROWS);
-    gridPtrCurr = gridA;
-    gridPtrNext = gridB;
-    count = 0;
-    displayRunningMenu();
-
-    do {
-        gotoxy(COLS - 9, ROWS + 1);
-        printf("Gen: %4d", count++);
-
-        applyRule(gridPtrCurr, gridPtrNext);
-        printGrid(gridPtrCurr);
-
-        // swap pointers
-        tmpPtr = gridPtrCurr;
-        gridPtrCurr = gridPtrNext;
-        gridPtrNext = tmpPtr;
-
-        ch = getch();   // TODO: allow the user to let the simulation run until a key is pressed?
-    } while(ch != KEY_ESC);
-
-    return EXIT_SUCCESS;
+    return quitLoadScreen;
 }
 
 int loadScreenSleep() {
     int i = 0;
     char ch = ' ';
+
     for(i = 0; i < 1000; i++) {
         if (kbhit())
              return getch();
         _sleep(1);
     }
+
     return EXIT_SUCCESS;
 }
 
@@ -140,8 +152,9 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
         strcat(datfile, "random.dat");
         createRandDatFile(datfile);
         break;
+
     default:
-        boolQuit = FALSE;
+        boolQuit = FALSE;   //unsupported keypress
         break;
     }
 
@@ -232,7 +245,7 @@ void displayRunningMenu(void) {
         printf("-");
     }
     gotoxy(0, ROWS + 1);
-    printf("Press (ESC) to exit");
+    printf("Press (ESC) to exit back to menu");
     for (i = 0; i < COLS; i++) {
         printf(" ");
     }
