@@ -1,73 +1,39 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "applyRules.h"
 #include "globals.h"
+#include "applyRules.h"
 
-void setEqualTo(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
-    int i = 0, j = 0;
 
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < COLS; j++) {
-            gridNext[i][j] = gridCurr[i][j];
-        }
-    }
+
+void applyRule(char gridCurr[][COLS], char gridNext[][COLS], int rule[2][9]) {
+	for (int y = 0; y != ROWS; y++) {
+		for (int x = 0; x != COLS; x++) {
+			gridNext[y][x] = rule[(gridCurr[y][x] == TRUE)][neighbors(x, y, gridCurr)];
+		}
+	}
 }
 
-void applyRules(const char gridCurr[][COLS], char gridNext[][COLS], const int rows) {
-    int i = 0, j = 0;
-    int neighbors = 0;
-
-    setEqualTo(gridCurr, gridNext, ROWS);
-
-    for (i = 0; i < rows; i++) {
-        for (j = 0; j < COLS; j++) {
-            // Check if an organism is born into an empty cell if it has exactly 3 neighbors
-            if (!gridCurr[i][j]) {
-                neighbors = 0;	// initialize to no known neighbors
-                if (gridCurr[i-1][j-1] && (i - 1) >= 0 && (j - 1) >= 0)		// top left
-                    neighbors++;
-                if (gridCurr[i-1][j] && (i - 1) >= 0)	                        // left side
-                    neighbors++;
-                if (gridCurr[i-1][j+1] && (i - 1) >= 0 && (j + 1) < COLS)	// bottom left
-                    neighbors++;
-                if (gridCurr[i][j-1] && (j - 1) >= 0)	                        // top side
-                    neighbors++;
-                if (gridCurr[i][j+1] && (j + 1) < COLS)	                        // bottom side
-                    neighbors++;
-                if (gridCurr[i+1][j-1] && (i + 1) < rows && (j - 1) >= 0)	// top right
-                    neighbors++;
-                if (gridCurr[i+1][j] && (i + 1) < rows)	                	// right side
-                    neighbors++;
-                if (gridCurr[i+1][j+1] && (i + 1) < rows && (j + 1) < COLS)	// bottom right
-                    neighbors++;
-
-                if (neighbors == 3)
-                    gridNext[i][j] = 1;	// An organism is born at this location
-            }
-
-            // Check if an organism dies if it has < 2 or > 3 neighbors
-            if (gridCurr[i][j]) {
-                neighbors = 0;  // initialize to no known neighbors
-                if (gridCurr[i-1][j-1] && (i - 1) >= 0 && (j - 1) >= 0)		// top left
-                    neighbors++;
-                if (gridCurr[i-1][j] && (i - 1) >= 0)                          	// left side
-                    neighbors++;
-                if (gridCurr[i-1][j+1] && (i - 1) >= 0 && (j + 1) < COLS)    	// bottom left
-                    neighbors++;
-                if (gridCurr[i][j-1] && (j - 1) >= 0)                          	// top side
-                    neighbors++;
-                if (gridCurr[i][j+1] && (j + 1) < COLS)	                	// bottom side
-                    neighbors++;
-                if (gridCurr[i+1][j-1] && (i + 1) < rows && (j - 1) >= 0)	// top right
-                    neighbors++;
-                if (gridCurr[i+1][j] && (i + 1) < rows)	                	// right side
-                    neighbors++;
-                if (gridCurr[i+1][j+1] && (i + 1) < rows && (j + 1) < COLS)	// bottom right
-                    neighbors++;
-
-                if (neighbors < 2 || neighbors > 3)
-                    gridNext[i][j] = 0;	// The organism dies at this location
-            }
-        }
-    }
+int neighbors(unsigned x, unsigned y, char grid[][COLS]) {
+	int ret = 0;
+	if (x <= COLS && y <= ROWS) {
+		if (x - 1 < COLS) {
+			ret += (grid[y][(x - 1)] == TRUE);
+			if (y - 1 < ROWS)
+				ret += (grid[(y - 1)][(x - 1)] == TRUE);
+			if (y + 1 < ROWS)
+				ret += (grid[(y + 1)][(x - 1)] == TRUE);
+		}
+		if (x + 1 < COLS) {
+			ret += (grid[y][(x + 1)] == TRUE);
+			if (y - 1 < ROWS)
+				ret += (grid[(y - 1)][(x + 1)] == TRUE);
+			if (y + 1 < ROWS)
+				ret += (grid[(y + 1)][(x + 1)] == TRUE);
+		}
+		if (y - 1 < ROWS) {
+			ret += (grid[(y - 1)][x] == TRUE);
+		}
+		if (y + 1 < ROWS) {
+			ret += (grid[(y + 1)][x] == TRUE);
+		}
+	}
+	return ret;
 }
