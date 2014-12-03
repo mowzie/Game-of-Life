@@ -10,7 +10,7 @@ Game-of-Life
 
 * ~~When hitting a key to advance the generation, there's an underscore char that zooms down the screen.  It'd be good to remove this.~~
 
-* Pressing Esc to quit a simulation exits the whole program.  It'd be better if it returned you back to the main menu instead.
+* ~~Pressing Esc to quit a simulation exits the whole program.  It'd be better if it returned you back to the main menu instead.~~
 
 * ~~When creating a new world with the dat file creation tool, it saves only to .\worlds\new.dat.  It'd be better to let the user specify the path/filename if they want to.~~
 
