@@ -68,7 +68,6 @@ int main(void) {
 }
 
 int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS], int rule[2][9] ) {
-<<<<<<< HEAD
     char ch = ' ';
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;
