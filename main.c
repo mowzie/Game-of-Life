@@ -25,6 +25,11 @@ int main(void) {
     char (*gridPtrCurr)[COLS] = NULL;   //pointer to the currently displayed array
     char (*gridPtrNext)[COLS] = NULL;   //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
+    int rule[2][9] = 
+	{   //0	 1	2  3  4	 5	6  7  8		//# of Neighbors
+		{ 0, 0, 0, 1, 0, 0, 0, 0, 0 },	//Birth Rules
+		{ 0, 0, 1, 1, 0, 0, 0, 0, 0 }	//Survival Rules
+	};
     char ch = ' ';                      //getch holder when running
     int quit = 0;                       //"bool" to show start screen
     int count = 0;                      //generation counter
@@ -58,7 +63,7 @@ int main(void) {
             _sleep(3500);  // TODO: this currently blocks UI, Fix this
         }
         printGrid(gridPtrCurr);
-        applyRules(gridPtrCurr, gridPtrNext, ROWS);
+        applyRule(gridPtrCurr, gridPtrNext, rule);
 
         // swap array pointers
         tmpPtr = gridPtrCurr;
@@ -87,7 +92,7 @@ int main(void) {
         gotoxy(COLS - 9, ROWS + 1);
         printf("Gen: %4d", count++);
 
-        applyRules(gridPtrCurr, gridPtrNext, ROWS);
+        applyRule(gridPtrCurr, gridPtrNext, rule);
         printGrid(gridPtrCurr);
 
         // swap pointers
