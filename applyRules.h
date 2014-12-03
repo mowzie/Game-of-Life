@@ -1,5 +1,5 @@
 #ifndef APPLY_RULES_H
-#define APPLY_RULES_H 1
+#define APPLY_RULES_H
 
 #include "globals.h"
 

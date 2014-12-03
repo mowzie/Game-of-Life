@@ -1,5 +1,5 @@
 //---------------------------------------------------------
-// File: datfile.h
+// File: datfile.c
 //
 // Functions:
 //            gotoxy()
@@ -53,9 +53,7 @@
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(const int x, const int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
+    COORD coord = {x, y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
@@ -240,7 +238,7 @@ void createRandDatFile(const char* filename) {
     // Seed random number generator with the current time
     srand((unsigned int)time(NULL));
 
-    // Randomly decide whether or not the grid[i][j] location will contain a *
+    // Randomly choose whether or not a location will be marked
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             if (rand() % 8 == 1) {    // Randomly choose one out of every 8

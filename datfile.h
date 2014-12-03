@@ -1,18 +1,16 @@
 #ifndef DATFILE_H
-#define DATFILE_H 1
+#define DATFILE_H
+
 //---------------------------------------------------------
 // File: datfile.h
 //
 // Functions:
-//			readDatFile()
-//			createDatFile()
-//			createRandDatFile()
-//			gotoxy()
+//            readDatFile()
+//            createDatFile()
+//            createRandDatFile()
+//            gotoxy()
 //---------------------------------------------------------
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
 #include "globals.h"
 #pragma warning(disable: 4996)
 
@@ -25,157 +23,158 @@ struct Location {
 //---------------------------------------------------------
 // Function: readDatFile()
 //
-// Title:	Function to read a given dat file and populate a 2D array
+// Title:    Function to read a given dat file and populate a 2D array
 //
 // Description:
-//			Populates a 2D array given a dat file, the array, and the
-//			number of rows in the array.
+//            Populates a 2D array given a dat file, the array, and the
+//            number of rows in the array.
 //
 //
-// Programmer:	Matt Alexander
+// Programmer:    Matt Alexander
 //
-// Date:	12/04/2014
+// Date:    12/04/2014
 //
 // Version: 1.0
 //
 // Environment:
-//			Hardware: Intel x86_64 PC
-//			Software: Windows 7
-//			Compiles under Microsoft Visual Studio 2012
+//            Hardware: Intel x86_64 PC
+//            Software: Windows 7
+//            Compiles under Microsoft Visual Studio 2012
 //
-// Input:	N/A
+// Input:    N/A
 //
-// Ouput:	N/A
+// Ouput:    N/A
 //
-// Called By:	main()
+// Called By:    main()
 //
-// Calls:		N/A
+// Calls:        N/A
 //
-// Parameters:	const char* filename
-//				char grid[][COLS]
-//				int rows
+// Parameters:    const char* filename
+//                char grid[][COLS]
+//                int rows
 //
-// Returns:	N/A
+// Returns:    N/A
 //
 // History Log:
-//			12/04/2014 MA completed version 1.0
+//            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void readDatFile(const char* filename, char gridCurr[][COLS], const int rows);
 
 //---------------------------------------------------------
 // Function: createDatFile()
 //
-// Title:	Function to create a custom Dat File.
+// Title:    Function to create a custom Dat File.
 //
 // Description:
-//			Creates a representation of a dat file in the console
-//			and allows the user to move around using either the
-//			arrow keys or the wasd keys.  Toggling a particular
-//			position on or off can be done with the spacebar.
-//			The results are saved to the passed in filename.
+//            Creates a representation of a dat file in the console
+//            and allows the user to move around using either the
+//            arrow keys or the wasd keys.  Toggling a particular
+//            position on or off can be done with the spacebar.
+//            The results are saved to the passed in filename.
 //
 //
-// Programmer:	Matt Alexander
+// Programmer:    Matt Alexander
 //
-// Date:	12/04/2014
+// Date:    12/04/2014
 //
 // Version: 1.0
 //
 // Environment:
-//			Hardware: Intel x86_64 PC
-//			Software: Windows 7
-//			Compiles under Microsoft Visual Studio 2012
+//            Hardware: Intel x86_64 PC
+//            Software: Windows 7
+//            Compiles under Microsoft Visual Studio 2012
 //
-// Input:	Console input for moving and selecting locations
+// Input:    Console input for moving and selecting locations
 //
-// Ouput:	A text file with coordinates of the marked locations
+// Ouput:    A text file with coordinates of the marked locations
 //
-// Called By:	main()
+// Called By:    main()
 //
-// Calls:		gotoxy()
+// Calls:        gotoxy()
 //
-// Parameters:	const char* filename
+// Parameters:    const char* filename
 //
-// Returns:	N/A
+// Returns:    N/A
 //
 // History Log:
-//			12/04/2014 MA completed version 1.0
+//            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void createDatFile(const char* filename);
 
 //---------------------------------------------------------
 // Function: createRandDatFile()
 //
-// Title:	Function to create a random Dat File.
+// Title:    Function to create a random Dat File.
 //
 // Description:
-//			Generates randomly placed marked spots and saves
-//			this to a dat file with the passed in filename.
+//            Generates randomly placed marked spots and saves
+//            this to a dat file with the passed in filename.
 //
 //
-// Programmer:	Matt Alexander
+// Programmer:    Matt Alexander
 //
-// Date:	12/04/2014
+// Date:    12/04/2014
 //
 // Version: 1.0
 //
 // Environment:
-//			Hardware: Intel x86_64 PC
-//			Software: Windows 7
-//			Compiles under Microsoft Visual Studio 2012
+//            Hardware: Intel x86_64 PC
+//            Software: Windows 7
+//            Compiles under Microsoft Visual Studio 2012
 //
-// Input:	N/A
+// Input:    N/A
 //
-// Ouput:	A text file with coordinates of the marked locations
+// Ouput:    A text file with coordinates of the marked locations
 //
-// Called By:	main()
+// Called By:    main()
 //
-// Calls:		N/A
+// Calls:        N/A
 //
-// Parameters:	const char* filename
+// Parameters:    const char* filename
 //
-// Returns:	N/A
+// Returns:    N/A
 //
 // History Log:
-//			12/04/2014 MA completed version 1.0
+//            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void createRandDatFile(const char* filename);
 
 //---------------------------------------------------------
 // Function: gotoxy()
 //
-// Title:	Takes an X and Y coordinate and goes to that console location
+// Title:    Takes an X and Y coordinate and goes to that console location
 //
 // Description:
-//			Wraps a Windows-specific function, SetConsoleCursorPosition,
-//			and moves the curser to that console location.
+//            Wraps a Windows-specific function, SetConsoleCursorPosition,
+//            and moves the curser to that console location.
 //
 //
-// Programmer:	Matt Alexander
+// Programmer:    Matt Alexander
 //
-// Date:	12/04/2014
+// Date:    12/04/2014
 //
 // Version: 1.0
 //
 // Environment:
-//			Hardware: Intel x86_64 PC
-//			Software: Windows 7
-//			Compiles under Microsoft Visual Studio 2012
+//            Hardware: Intel x86_64 PC
+//            Software: Windows 7
+//            Compiles under Microsoft Visual Studio 2012
 //
-// Input:	N/A
+// Input:    N/A
 //
-// Ouput:	N/A
+// Ouput:    N/A
 //
-// Called By:	createDatFile()
+// Called By:    createDatFile()
 //
-// Calls:		SetConsoleCursorPosition()
+// Calls:        SetConsoleCursorPosition()
 //
-// Parameters:	int x, int y
+// Parameters:    int x, int y
 //
-// Returns:	N/A
+// Returns:    N/A
 //
 // History Log:
-//			12/04/2014 MA completed version 1.0
+//            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(const int x, const int y);
+
 #endif

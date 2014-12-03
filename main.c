@@ -1,7 +1,7 @@
 #include <conio.h>      //getch && kbhit
 #include <stdio.h>
 #include <stdlib.h>
-#include <Windows.h>    //for setting window sizes and moving to console locations
+#include <windows.h>    //for setting window sizes and moving to console locations
 #include "datfile.h"
 #include "applyRules.h"
 #include "dirent.h"     //for listing directory contents
@@ -23,21 +23,18 @@ int main(void) {
     char datfile[FILENAME_MAX];         //starting world filename
     char gridA[ROWS][COLS] = {{0}};     //create two arrays for the current and next state
     char gridB[ROWS][COLS] = {{0}};
-    char (*gridPtrCurr)[COLS] = NULL;   //pointer to the currently displayed array
-    char (*gridPtrNext)[COLS] = NULL;   //pointer to the next array to be used
+    char (*gridPtrCurr)[COLS] = gridA   //pointer to the currently displayed array
+    char (*gridPtrNext)[COLS] = gridB;  //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
-    char ch = ' ';                      //getch holder when running
+    char ch = 0;                        //getch holder when running
     int quit = 0;
     int count = 0;                      //generation counter
     int i = 0;                          //loop vars
     int j = 0;
 
-    //Windows.h call: set the window size when it loads so we can see everything
+    //windows.h call: set the window size when it loads so we can see everything
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
-
-    gridPtrCurr = gridA;
-    gridPtrNext = gridB;
 
     while (TRUE) {
         if (runLoadScreen(datfile,gridPtrCurr,gridPtrNext,tmpPtr,rule) == EXIT_APPLICATION)
@@ -53,7 +50,7 @@ int main(void) {
             gotoxy(COLS - 9, ROWS + 1);
             printf("Gen: %4d", count++);
 
-            applyRule(gridPtrCurr, gridPtrNext, rule);
+            applyRule(gridPtrCurr, gridPtrNext);
             printGrid(gridPtrCurr);
 
             // swap pointers
@@ -64,11 +61,12 @@ int main(void) {
             ch = getch();
         } while(ch != KEY_ESC);
     }
+
     return EXIT_SUCCESS;
 }
 
-int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS], int rule[2][9] ) {
-    char ch = ' ';
+int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS]) {
+    char ch = 0;
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;
 
@@ -94,6 +92,7 @@ int runLoadScreen(char *datfile, char gridPtrCurr[][COLS], char gridPtrNext[][CO
             printGrid(gridPtrCurr);
             quitLoadScreen = loadScreenSleep();
         }
+
         printGrid(gridPtrCurr);
         applyRule(gridPtrCurr, gridPtrNext);
 
@@ -121,8 +120,9 @@ int loadScreenSleep() {
     int i = 0;
 
     for(i = 0; i < 1000; i++) {
-        if (kbhit())
-             return getch();
+        if (kbhit()) {
+            return getch();
+        }
         _sleep(1);
     }
 
@@ -130,12 +130,13 @@ int loadScreenSleep() {
 }
 
 int checkLoadScreenKeyPress(char* datfile, const char ch) {
-    int boolQuit = TRUE; //Assume the user is exitint out of the load screen
+    int boolQuit = TRUE;  //Assume the user is exiting out of the load screen
 
     switch (tolower(ch)) {
     case KEY_ESC:
         boolQuit = EXIT_APPLICATION;
         break;
+
     case 'c':
         enterFileName(datfile);
         createDatFile(datfile);
