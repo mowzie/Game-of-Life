@@ -238,7 +238,7 @@ void createRandDatFile(const char* filename) {
     int j = 0;
 
     // Seed random number generator with the current time
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 
     // Randomly decide whether or not the grid[i][j] location will contain a *
     for (i = 0; i < ROWS; i++) {

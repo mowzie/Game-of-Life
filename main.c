@@ -10,7 +10,7 @@
 
 void enterFileName(char* datfile);
 int hasDatExt(const char* filename);
-void displayFiles(char* datfile);
+int displayFiles(char* datfile);
 void displayMenu(void);
 void displayRunningMenu(void);
 void printGrid(const char gridCurr[][COLS]);
@@ -181,7 +181,7 @@ int hasDatExt(const char* filename) {
     return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
 }
 
-void displayFiles(char* datfile) {
+int displayFiles(char* datfile) {
     unsigned int filenum = 0;
     char filename[128][MAX_PATH];   // Array of strings to hold filenames
     DIR* d = NULL;
