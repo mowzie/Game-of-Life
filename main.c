@@ -32,7 +32,7 @@ int main(void) {
 		{ 0, 0, 1, 1, 0, 0, 0, 0, 0 }	//Survival Rules
 	};
     char ch = ' ';                      //getch holder when running
-    int quitLoadScreen = FALSE;                       //"bool" to show start screen
+    int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;                      //generation counter
     int i = 0;                          //loop vars
     int j = 0;
@@ -56,6 +56,9 @@ int main(void) {
     //Should we put the game logic in its own function outside of MAIN?
     //that way we can call it whenever/however we want  (such as restarting, etc)
     if (quitLoadScreen) {
+        if (quitLoadScreen == KEY_ESC) {
+                return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
+            }
         checkLoadScreenKeyPress(datfile, quitLoadScreen);
     } else {
     while (!quitLoadScreen) {
@@ -113,8 +116,7 @@ int main(void) {
 int loadScreenSleep() {
     int i = 0;
     char ch = ' ';
-    for(i = 0; i < 1000; i++)
-    {
+    for(i = 0; i < 1000; i++) {
         if (kbhit())
              return getch();
         _sleep(1);
@@ -123,7 +125,7 @@ int loadScreenSleep() {
 }
 
 int checkLoadScreenKeyPress(char* datfile, const char ch) {
-    int boolQuit = TRUE;
+    int boolQuit = TRUE; //Assume the user is exitint out of the load screen
 
     switch (tolower(ch)) {
     case KEY_ESC:
