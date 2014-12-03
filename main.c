@@ -26,11 +26,6 @@ int main(void) {
     char (*gridPtrCurr)[COLS] = NULL;   //pointer to the currently displayed array
     char (*gridPtrNext)[COLS] = NULL;   //pointer to the next array to be used
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
-    int rule[2][9] = 
-	{   //0	 1	2  3  4	 5	6  7  8		//# of Neighbors
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0 },	//Birth Rules
-		{ 0, 0, 1, 1, 0, 0, 0, 0, 0 }	//Survival Rules
-	};
     char ch = ' ';                      //getch holder when running
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;                      //generation counter
@@ -69,7 +64,7 @@ int main(void) {
             quitLoadScreen = loadScreenSleep();
         }
         printGrid(gridPtrCurr);
-        applyRule(gridPtrCurr, gridPtrNext, rule);
+        applyRule(gridPtrCurr, gridPtrNext);
 
         // swap array pointers
         tmpPtr = gridPtrCurr;
@@ -83,7 +78,7 @@ int main(void) {
             ch = getch();
             quitLoadScreen = checkLoadScreenKeyPress(datfile, ch);
             if (quitLoadScreen == EXIT_APPLICATION) {
-                return EXIT_SUCCESS;  //user wanted to exit the app, so exit cleanly
+                return EXIT_SUCCESS;
             }
         }
     }
@@ -99,7 +94,7 @@ int main(void) {
         gotoxy(COLS - 9, ROWS + 1);
         printf("Gen: %4d", count++);
 
-        applyRule(gridPtrCurr, gridPtrNext, rule);
+        applyRule(gridPtrCurr, gridPtrNext);
         printGrid(gridPtrCurr);
 
         // swap pointers
