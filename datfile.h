@@ -51,12 +51,12 @@ struct Location {
 // Parameters:    const char* filename
 //                char grid[][COLS]
 //
-// Returns:    N/A
+// Returns:    Int:  Exit status
 //
 // History Log:
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void readDatFile(const char* filename, char gridCurr[][COLS]);
+int readDatFile(const char* filename, char gridCurr[][COLS]);
 
 //---------------------------------------------------------
 // Function: createDatFile()

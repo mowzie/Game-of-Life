@@ -74,11 +74,19 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
     int quitLoadScreen = FALSE;   //"bool" to show start screen
     int count = 0;
 
-    displayMenu();
+
 
     strcpy(datfile, dirprefix);         //Load in the Splash Screen
     strcat(datfile, welcomeFile);
-    readDatFile(datfile, gridPtrCurr);
+    if (readDatFile(datfile, gridPtrCurr) == EXIT_FAILURE) {
+        printf("\nCreating new 'welcome.dat' from a randomly generated file\n\n");
+        printf("Press any key to continue.");
+        getch();
+        system("mkdir worlds");
+        createRandDatFile(datfile);
+        readDatFile(datfile, gridPtrCurr);
+    }
+    displayMenu();
     printGrid(gridPtrCurr);
     gotoxy(COLS, ROWS);   //hide the curser by the game border
     quitLoadScreen = loadScreenSleep();

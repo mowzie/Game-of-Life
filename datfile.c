@@ -226,7 +226,7 @@ void createDatFile(const char* filename) {
 //
 // Parameters:    const char* filename
 //
-// Returns:    N/A
+// Returns:    Int: Exit status
 //
 // History Log:
 //            12/04/2014 MA completed version 1.0
@@ -307,7 +307,7 @@ void createRandDatFile(const char* filename) {
 // History Log:
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void readDatFile(const char* filename, char grid[][COLS]) {
+int readDatFile(const char* filename, char grid[][COLS]) {
     FILE* inFileH = NULL;
     int i = 0;
     int j = 0;
@@ -321,10 +321,11 @@ void readDatFile(const char* filename, char grid[][COLS]) {
 
     inFileH = fopen(filename, "r");
     if (!inFileH) {
-        printf("\n*** Error! Could not open input file: \"%s\" ***\n\n"
+        system("cls");
+        fprintf(stderr,"\n*** Error! Could not open input file: \"%s\" ***\n\n"
                "Press any key to continue.", filename);
         getch();
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     // process input
@@ -333,6 +334,7 @@ void readDatFile(const char* filename, char grid[][COLS]) {
     }
 
     fclose(inFileH);
+    return EXIT_SUCCESS;
 }
 
 void enterFileName(char* datfile) {
@@ -370,6 +372,8 @@ int displayFiles(char* datfile) {
     char filename[128][MAX_PATH];   // Array of strings to hold filenames
     DIR* d = NULL;
     struct dirent* dir = NULL;
+    unsigned int fileCount = 0;
+    int okay = FALSE;
 
     system("cls");
     printf("Please choose a file\n");
@@ -381,22 +385,38 @@ int displayFiles(char* datfile) {
             if (strstr(dir->d_name, ".dat")) {
                 strcpy(filename[filenum], dir->d_name);
                 printf("    %d: %s\n", ++filenum, dir->d_name);
+                fileCount++;
             }
         }
         closedir(d);
-        printf("\nEnter the file number and press Enter >>> ");
-        while (fscanf(stdin, "%d", &filenum) != 1) {
+     
+        if (fileCount == 0) {
+            printf("No files found in directory \"%s\"\n\n"
+                    "Press any key to continue.", dirprefix);
+            getch();
+            return EXIT_FAILURE;
+        }
+
+        do {
+            printf("\nEnter the file number and press Enter >>> ");
+            while (fscanf(stdin, "%d", &filenum) != 1) {
+                while (getchar() != '\n')
+                    ;
+                printf("Enter the file number and press Enter >>> ");
+            }
             while (getchar() != '\n')
                 ;
-            printf("Enter the file number and press Enter >>> ");
-        }
-        while (getchar() != '\n')
-            ;
+            if ((filenum <= fileCount) && (filenum != 0))
+                okay = TRUE;
+        } while (!okay);
+        
         strcpy(datfile, dirprefix);
         strcat(datfile, filename[filenum - 1]);
     }
     else {
-        fprintf(stderr, "Could not open the directory");
+        fprintf(stderr, "*** Error! Could not open the directory '%s' ***\n\n"
+                            "Press any key to continue.", dirprefix);
+            getch();
         return EXIT_FAILURE;
     }
 
