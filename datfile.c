@@ -311,7 +311,7 @@ int readDatFile(const char* filename, char grid[][COLS]) {
     FILE* inFileH = NULL;
     int i = 0;
     int j = 0;
-
+    char read = 0;
         // init grid with 0
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
@@ -329,10 +329,26 @@ int readDatFile(const char* filename, char grid[][COLS]) {
     }
 
     // process input
-    while (fscanf(inFileH, "%d,%d", &i, &j) != EOF) {
-        grid[i][j] = 1;
+    fscanf(inFileH, "%c", &i);
+    fseek(inFileH, 0,SEEK_SET);
+    if (!isdigit(i)) {
+        for (i = 0; i < ROWS; i++) {
+            for (j = 0; j < COLS; j++) {
+                read = fgetc(inFileH);
+                if (read == '\n')
+                    break;
+                else if (!isspace(read) && read != EOF)
+                    grid[i][j] = 1;
+                else
+                    grid[i][j] = 0;
+            }
+        }
+        
+    } else {
+        while (fscanf(inFileH, "%d,%d", &i, &j) != EOF) {
+            grid[i][j] = 1;
+        }
     }
-
     fclose(inFileH);
     return EXIT_SUCCESS;
 }
