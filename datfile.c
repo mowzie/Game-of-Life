@@ -134,7 +134,7 @@ void createDatFile(const char* filename) {
     // User can move around the grid with either the arrow keys or WASD.
     // The spacebar is used to toggle organisms on or off.
     while((keyPress = getch()) != KEY_ESC) {
-        if (keyPress == 224) {      // Arrow keys require two reads from getch()
+        if (keyPress == 224) {    // Arrow keys require two reads from getch()
             keyPress = getch();
             switch(keyPress) {
             case ARROW_UP:          // UP
@@ -165,7 +165,8 @@ void createDatFile(const char* filename) {
                 if (++loc.x >= COLS) loc.x = COLS - 1;
                 break;
             case ' ':       // Toggle spot
-                if (grid[loc.y][loc.x]) {  // loc.x, loc.y are reversed from ROWS, COLUMNS
+                   // loc.x, loc.y are reversed from ROWS, COLUMNS
+                if (grid[loc.y][loc.x]) {
                     grid[loc.y][loc.x] = 0;
                     printf(" ");
                 } else {
@@ -325,8 +326,8 @@ int readDatFile(const char* filename, char grid[][COLS]) {
     inFileH = fopen(filename, "r");
     if (!inFileH) {
         system("cls");
-        fprintf(stderr,"\n*** Error! Could not open input file: \"%s\" ***\n\n"
-               "Press any key to continue.", filename);
+        fprintf(stderr,"\n*** Error! Could not open input file: \"%s\" ***\n"
+               "\nPress any key to continue.", filename);
         getch();
         return EXIT_FAILURE;
     }
@@ -414,7 +415,7 @@ void enterFileName(char* datfile) {
         }
     // Verify that the file ends in .dat and isn't longer than MAX_PATH
     } while ((!hasDatExt(filename)) || (strlen(filename) >= MAX_PATH
-                                       - wcslen(buff) - strlen(DIRPREFIX) - 1));
+                                     - wcslen(buff) - strlen(DIRPREFIX) - 1));
     strcpy(datfile, DIRPREFIX);
     strcat(datfile, filename);
     

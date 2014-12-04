@@ -61,7 +61,7 @@ int main(void) {
     char (*tmpPtr)[COLS] = NULL;        //temp pointer used for pointer swap
     char ch = 0;                        //getch holder when running
     unsigned int count = 0;             //generation counter
-    int autorun = FALSE;                //whether or not to run without user input
+    int autorun = FALSE;                //start with user input required
 
     //windows.h call: set the window size when it loads
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 4};

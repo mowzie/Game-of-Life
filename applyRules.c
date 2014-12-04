@@ -55,7 +55,8 @@ void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
 
     for (y = 0; y != ROWS; y++) {
         for (x = 0; x != COLS; x++) {
-            gridNext[y][x] = rule[(gridCurr[y][x] == TRUE)][neighbors(x, y, gridCurr)];
+            gridNext[y][x] =
+                    rule[(gridCurr[y][x] == TRUE)][neighbors(x, y, gridCurr)];
         }
     }
 }
