@@ -400,7 +400,7 @@ int displayFiles(char* datfile) {
         while ((dir = readdir(d)) != NULL) {
             if (strstr(dir->d_name, ".dat")) {
                 strcpy(filename[filenum], dir->d_name);
-                printf("    %d: %s\n", ++filenum, dir->d_name);
+                printf("    %d: %s%s\n", ++filenum, dirprefix, dir->d_name);
                 fileCount++;
             }
         }
