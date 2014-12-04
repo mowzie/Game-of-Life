@@ -335,7 +335,7 @@ int readDatFile(const char* filename, char grid[][COLS]) {
 
     // process input file
     fscanf(inFileH, "%c", &i);
-    fseek(inFileH, 0,SEEK_SET);
+    fseek(inFileH, 0, SEEK_SET);
     if (!isdigit(i)) {
         for (i = 0; i < ROWS; i++) {
             for (j = 0; j < COLS; j++) {
