@@ -12,6 +12,11 @@
 #define ARROW_DOWN        80
 #define ARROW_LEFT        75
 #define ARROW_RIGHT       77
+#define KEY_PRESS_ESCAPE 224
+#define WELCOME_END      170
+#define GEN_COUNT_LENGTH   9
+#define MENU_HEIGHT        4
+#define MAX_FILES     ROWS - MENU_HEIGHT
 #define TRUE               1
 #define FALSE              0
 #define EXIT_APPLICATION  -1    //internal define for if user wants to exit

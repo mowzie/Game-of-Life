@@ -95,9 +95,10 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
     quitLoadScreen = checkLoadScreenKeyPress(datfile, quitLoadScreen);
 
     while (!quitLoadScreen) {
-        if (count == 170) { //When welcomeFile becomes stagnent, start it over
+        if (count == WELCOME_END) { //When welcomeFile is stagnent, start over
             count = 0;
-            gotoxy(COLS - 9, ROWS + 1);
+            
+            gotoxy(COLS - GEN_COUNT_LENGTH, ROWS + 1);
             printf("Gen: %4d", count);
             readDatFile(datfile, gridPtrCurr);
             printGrid(gridPtrCurr);
@@ -112,7 +113,7 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
         gridPtrCurr = gridPtrNext;
         gridPtrNext = tmpPtr;
 
-        gotoxy(COLS - 9, ROWS + 1);
+        gotoxy(COLS - GEN_COUNT_LENGTH, ROWS + 1);
         printf("Gen: %4d", count++);
 
         if (kbhit()) {

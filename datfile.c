@@ -134,7 +134,8 @@ void createDatFile(const char* filename) {
     // User can move around the grid with either the arrow keys or WASD.
     // The spacebar is used to toggle organisms on or off.
     while((keyPress = getch()) != KEY_ESC) {
-        if (keyPress == 224) {    // Arrow keys require two reads from getch()
+            // Arrow keys require two reads from getch()
+        if (keyPress == KEY_PRESS_ESCAPE) {
             keyPress = getch();
             switch(keyPress) {
             case ARROW_UP:          // UP
@@ -458,8 +459,9 @@ void enterFileName(char* datfile) {
 // History Log:
 //              12/04/2014 MA completed version 1.0
 int hasDatExt(const char* filename) {
+    unsigned int extSize = 4;
     size_t len = strlen(filename);
-    return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
+    return len > extSize && strcmp(filename + len - extSize, ".dat") == 0;
 }
 
 //---------------------------------------------------------
@@ -501,7 +503,7 @@ int hasDatExt(const char* filename) {
 int displayFiles(char* datfile) {
     unsigned int fileNum = 0;
     unsigned int fileCount = 0;
-    char filename[128][MAX_PATH];   // Array of strings to hold filenames
+    char filename[MAX_FILES][MAX_PATH];   //Array of strings to hold filenames
     DIR* dh = NULL;         // DIR handle
     struct dirent* dir = NULL;
     int okay = FALSE;
@@ -512,7 +514,7 @@ int displayFiles(char* datfile) {
 
     dh = opendir(DIRPREFIX);
     if (dh) {
-        while ((dir = readdir(dh)) != NULL) {
+        while (((dir = readdir(dh)) != NULL) && (fileCount < MAX_FILES)) {
             if (strstr(dir->d_name, ".dat")) {
                 strcpy(filename[fileNum], dir->d_name);
                 printf("    %d: %s%s\n", ++fileNum, DIRPREFIX, dir->d_name);

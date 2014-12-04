@@ -64,7 +64,7 @@ int main(void) {
     int autorun = FALSE;                //start with user input required
 
     //windows.h call: set the window size when it loads
-    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 4};
+    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + MENU_HEIGHT};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
     //Run the game forever
@@ -83,7 +83,7 @@ int main(void) {
 
         //Run simulation
         do {
-            gotoxy(COLS - 9, ROWS + 1);
+            gotoxy(COLS - GEN_COUNT_LENGTH, ROWS + 1);
             printf("Gen: %4d", count++);
 
             applyRule(gridPtrCurr, gridPtrNext);
