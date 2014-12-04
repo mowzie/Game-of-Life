@@ -294,8 +294,8 @@ void displayMenu(void) {
         printf("-");
     }
     gotoxy(0, ROWS + 1);
-    printf("Press (ESC) to exit\t(L)oad World\t"
-           "(C)reate World\t(R)andom World");
+    printf("Press (ESC) to exit   (L)oad World   (C)reate World   "
+            "(R)andom World");
 }
 
 //----------------------------------------------------------------------------
