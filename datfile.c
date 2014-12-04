@@ -1,11 +1,14 @@
 //---------------------------------------------------------
-// File: datfile.c
+// File:        datfile.c
 //
 // Functions:
-//            gotoxy()
-//            createDatFile()
-//            createRandDatFile()
-//            readDatFile()
+//              readDatFile()
+//              createDatFile()
+//              createRandDatFile()
+//              gotoxy()
+//              enterFileName()
+//              hasDatExt()
+//              displayFiles()
 //---------------------------------------------------------
 
 #include <stdio.h>
@@ -17,40 +20,40 @@
 
 
 //---------------------------------------------------------
-// Function: gotoxy()
+// Function:    gotoxy()
 //
-// Title:    Takes an X and Y coordinate and goes to that console location
+// Title:       Takes an X and Y coordinate and goes to that console location
 //
 // Description:
-//            Wraps a Windows-specific function, SetConsoleCursorPosition,
-//            and moves the curser to that console location.
+//              Wraps a Windows-specific function, SetConsoleCursorPosition,
+//              and moves the curser to that console location.
 //
 //
-// Programmer:    Matt Alexander
+// Programmer:  Matt Alexander
 //
-// Date:    12/04/2014
+// Date:        12/04/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//            Hardware: Intel x86_64 PC
-//            Software: Windows 7
-//            Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:    N/A
+// Input:       N/A
 //
-// Ouput:    N/A
+// Ouput:       N/A
 //
-// Called By:    createDatFile()
+// Called By:   createDatFile()
 //
-// Calls:        SetConsoleCursorPosition()
+// Calls:       SetConsoleCursorPosition()
 //
-// Parameters:    int x, int y
+// Parameters:  int x, int y
 //
-// Returns:    N/A
+// Returns:     N/A
 //
 // History Log:
-//            12/04/2014 MA completed version 1.0
+//              12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void gotoxy(const int x, const int y) {
     COORD coord = {x, y};
@@ -58,43 +61,43 @@ void gotoxy(const int x, const int y) {
 }
 
 //---------------------------------------------------------
-// Function: createDatFile()
+// Function:    createDatFile()
 //
-// Title:    Function to create a custom Dat File.
+// Title:       Function to create a custom Dat File.
 //
 // Description:
-//            Creates a representation of a dat file in the console
-//            and allows the user to move around using either the
-//            arrow keys or the wasd keys.  Toggling a particular
-//            position on or off can be done with the spacebar.
-//            The results are saved to the passed in filename.
+//              Creates a representation of a dat file in the console
+//              and allows the user to move around using either the
+//              arrow keys or the wasd keys.  Toggling a particular
+//              position on or off can be done with the spacebar.
+//              The results are saved to the passed in filename.
 //
 //
-// Programmer:    Matt Alexander
+// Programmer:  Matt Alexander
 //
-// Date:    12/04/2014
+// Date:        12/04/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//            Hardware: Intel x86_64 PC
-//            Software: Windows 7
-//            Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:    Console input for moving and selecting locations
+// Input:       Console input for moving and selecting locations
 //
-// Ouput:    A text file with coordinates of the marked locations
+// Ouput:       A text file with coordinates of the marked locations
 //
-// Called By:    main()
+// Called By:   main()
 //
-// Calls:        gotoxy()
+// Calls:       gotoxy()
 //
-// Parameters:    const char* filename
+// Parameters:  const char* filename
 //
-// Returns:    N/A
+// Returns:     N/A
 //
 // History Log:
-//            12/04/2014 MA completed version 1.0
+//              12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void createDatFile(const char* filename) {
     FILE* outFileH = NULL;
@@ -131,37 +134,37 @@ void createDatFile(const char* filename) {
     // User can move around the grid with either the arrow keys or WASD.
     // The spacebar is used to toggle organisms on or off.
     while((keyPress = getch()) != KEY_ESC) {
-        if (keyPress == 224) {    // Arrow keys require two reads from getch()
+        if (keyPress == 224) {      // Arrow keys require two reads from getch()
             keyPress = getch();
             switch(keyPress) {
-            case ARROW_UP:      // UP
+            case ARROW_UP:          // UP
                 if (--loc.y < 0) loc.y = 0;
                 break;
-            case ARROW_DOWN:    // DOWN
+            case ARROW_DOWN:        // DOWN
                 if (++loc.y >= ROWS) loc.y = ROWS - 1;
                 break;
-            case ARROW_LEFT:    // LEFT
+            case ARROW_LEFT:        // LEFT
                 if (--loc.x < 0) loc.x = 0;
                 break;
-            case ARROW_RIGHT:   // RIGHT
+            case ARROW_RIGHT:       // RIGHT
                 if (++loc.x >= COLS) loc.x = COLS - 1;
                 break;
             }
         } else {
             switch(keyPress) {
-            case 'w':   // UP
+            case 'w':       // UP
                 if (--loc.y < 0) loc.y = 0;
                 break;
-            case 's':   // DOWN
+            case 's':       // DOWN
                 if (++loc.y >= ROWS) loc.y = ROWS - 1;
                 break;
-            case 'a':   // LEFT
+            case 'a':       // LEFT
                 if (--loc.x < 0) loc.x = 0;
                 break;
-            case 'd':   // RIGHT
+            case 'd':       // RIGHT
                 if (++loc.x >= COLS) loc.x = COLS - 1;
                 break;
-            case ' ':   // Toggle spot
+            case ' ':       // Toggle spot
                 if (grid[loc.y][loc.x]) {  // loc.x, loc.y are reversed from ROWS, COLUMNS
                     grid[loc.y][loc.x] = 0;
                     printf(" ");
@@ -196,40 +199,40 @@ void createDatFile(const char* filename) {
 }
 
 //---------------------------------------------------------
-// Function: createRandDatFile()
+// Function:    createRandDatFile()
 //
-// Title:    Function to create a random Dat File.
+// Title:       Function to create a random Dat File.
 //
 // Description:
-//            Generates randomly placed marked spots and saves
-//            this to a dat file with the passed in filename.
+//              Generates randomly placed marked spots and saves
+//              this to a dat file with the passed in filename.
 //
 //
-// Programmer:    Matt Alexander
+// Programmer:  Matt Alexander
 //
-// Date:    12/04/2014
+// Date:        12/04/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//            Hardware: Intel x86_64 PC
-//            Software: Windows 7
-//            Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:    N/A
+// Input:       N/A
 //
-// Ouput:    A text file with coordinates of the marked locations
+// Ouput:       A text file with coordinates of the marked locations
 //
-// Called By:    main()
+// Called By:   main()
 //
-// Calls:        N/A
+// Calls:       N/A
 //
-// Parameters:    const char* filename
+// Parameters:  const char* filename
 //
-// Returns:    Int: Exit status
+// Returns:     N/A
 //
 // History Log:
-//            12/04/2014 MA completed version 1.0
+//              12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 void createRandDatFile(const char* filename) {
     FILE* outFileH = NULL;
@@ -270,49 +273,49 @@ void createRandDatFile(const char* filename) {
 }
 
 //---------------------------------------------------------
-// Function: readDatFile()
+// Function:    readDatFile()
 //
-// Title:    Function to read a given dat file and populate a 2D array
+// Title:       Function to read a given dat file and populate a 2D array
 //
 // Description:
-//            Populates a 2D array given a dat file, the array, and the
-//            number of rows in the array.
+//              Populates a 2D array given a dat file, the array, and the
+//              number of rows in the array.
 //
 //
-// Programmer:    Matt Alexander
+// Programmer:  Matt Alexander
 //
-// Date:    12/04/2014
+// Date:        12/04/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//            Hardware: Intel x86_64 PC
-//            Software: Windows 7
-//            Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:    N/A
+// Input:       N/A
 //
-// Ouput:    N/A
+// Ouput:       N/A
 //
-// Called By:    main()
+// Called By:   main()
 //
-// Calls:        N/A
+// Calls:       N/A
 //
-// Parameters:    const char* filename
-//                char grid[][COLS]
-//                int rows
+// Parameters:  const char* filename
+//              char grid[][COLS]
 //
-// Returns:    N/A
+// Returns:     Int:  Exit status
 //
 // History Log:
-//            12/04/2014 MA completed version 1.0
+//              12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
 int readDatFile(const char* filename, char grid[][COLS]) {
     FILE* inFileH = NULL;
     int i = 0;
     int j = 0;
     char read = 0;
-        // init grid with 0
+
+    // init grid with 0
     for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             grid[i][j] = 0;
@@ -328,7 +331,7 @@ int readDatFile(const char* filename, char grid[][COLS]) {
         return EXIT_FAILURE;
     }
 
-    // process input
+    // process input file
     fscanf(inFileH, "%c", &i);
     fseek(inFileH, 0,SEEK_SET);
     if (!isdigit(i)) {
@@ -353,88 +356,197 @@ int readDatFile(const char* filename, char grid[][COLS]) {
     return EXIT_SUCCESS;
 }
 
+//---------------------------------------------------------
+// Function:    enterFileName()
+//
+// Title:       Function to get a filename from the user
+//
+// Description:
+//              Prompts the user for a .dat filename to save the
+//              new scenario.
+//
+//
+// Programmer:  Matt Alexander
+//
+// Date:        12/04/2014
+//
+// Version:     1.0
+//
+// Environment:
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
+//
+// Input:       N/A
+//
+// Ouput:       N/A
+//
+// Called By:   main()
+//
+// Calls:       hasDatExt()
+//
+// Parameters:  char* datfile
+//
+// Returns:     N/A
+//
+// History Log:
+//              12/04/2014 MA completed version 1.0
+//---------------------------------------------------------
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
     wchar_t buff[PATH_MAX];
-    _wgetcwd(buff, PATH_MAX);  //get string of current working dir
+
+    _wgetcwd(buff, PATH_MAX);   //get string of current working dir
         
     system("cls");
-        printf("Please enter a filename to save as your new dat file.");
+    puts("Please enter a filename to save as your new dat file.");
 
     do {
-        printf("\nYour filename must end with a '.dat' file extension.\n");
+        puts("Your filename must end with a '.dat' file extension.");
         printf(">>> ");
 
         fgets(filename, FILENAME_MAX, stdin);
-        if (filename[strlen(filename) - 1] == '\n') //remove newline
+        if (filename[strlen(filename) - 1] == '\n') { //remove newline
             filename[strlen(filename) - 1] = '\0';  //terminate string
-        else
-        while (getchar() != '\n')
-            ;
-        // Verify that the file ends in .dat and isn't longer than MAX_PATH
+        } else {
+            while (getchar() != '\n')
+                ;
+        }
+    // Verify that the file ends in .dat and isn't longer than MAX_PATH
     } while ((!hasDatExt(filename)) || (strlen(filename) >= MAX_PATH
-                                       - wcslen(buff)- strlen(dirprefix) -1));
-    strcpy(datfile, dirprefix);
+                                       - wcslen(buff) - strlen(DIRPREFIX) - 1));
+    strcpy(datfile, DIRPREFIX);
     strcat(datfile, filename);
     
     puts("");
 }
 
+
+//---------------------------------------------------------
+// Function:    hasDatExt()
+//
+// Title:       Function to verify that a filename ends in .dat
+//
+// Description:
+//              Verify that a passed in filename has a .dat file extension.
+//
+//
+// Programmer:  Matt Alexander
+//
+// Date:        12/04/2014
+//
+// Version:     1.0
+//
+// Environment:
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
+//
+// Input:       N/A
+//
+// Ouput:       N/A
+//
+// Called By:   enterFileName()
+//
+// Calls:       N/A
+//
+// Parameters:  const char* filename
+//
+// Returns:     N/A
+//
+// History Log:
+//              12/04/2014 MA completed version 1.0
 int hasDatExt(const char* filename) {
     size_t len = strlen(filename);
     return len > 4 && strcmp(filename + len - 4, ".dat") == 0;
 }
 
+//---------------------------------------------------------
+// Function:    displayFiles()
+//
+// Title:       Function to display files and select a file
+//
+// Description:
+//              Displays the current files in a directory
+//              and prompts the user to select a file to use.
+//
+//
+// Programmer:  Ian Littke & Matt Alexander
+//
+// Date:        12/04/2014
+//
+// Version:     1.0
+//
+// Environment:
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 7
+//              Compiles under Microsoft Visual Studio 2012
+//
+// Input:       N/A
+//
+// Ouput:       N/A
+//
+// Called By:   checkLoadScreenKeyPress()
+//
+// Calls:       N/A
+//
+// Parameters:  char* datfile
+//
+// Returns:     N/A
+//
+// History Log:
+//              12/04/2014 IL/MA completed version 1.0
+//---------------------------------------------------------
 int displayFiles(char* datfile) {
-    unsigned int filenum = 0;
-    char filename[128][MAX_PATH];   // Array of strings to hold filenames
-    DIR* d = NULL;
-    struct dirent* dir = NULL;
+    unsigned int fileNum = 0;
     unsigned int fileCount = 0;
+    char filename[128][MAX_PATH];   // Array of strings to hold filenames
+    DIR* dh = NULL;         // DIR handle
+    struct dirent* dir = NULL;
     int okay = FALSE;
 
     system("cls");
     printf("Please choose a file\n");
     printf("--------------------\n\n");
 
-    d = opendir(dirprefix);
-    if (d) {
-        while ((dir = readdir(d)) != NULL) {
+    dh = opendir(DIRPREFIX);
+    if (dh) {
+        while ((dir = readdir(dh)) != NULL) {
             if (strstr(dir->d_name, ".dat")) {
-                strcpy(filename[filenum], dir->d_name);
-                printf("    %d: %s%s\n", ++filenum, dirprefix, dir->d_name);
+                strcpy(filename[fileNum], dir->d_name);
+                printf("    %d: %s%s\n", ++fileNum, DIRPREFIX, dir->d_name);
                 fileCount++;
             }
         }
-        closedir(d);
+        closedir(dh);
      
         if (fileCount == 0) {
             printf("No files found in directory \"%s\"\n\n"
-                    "Press any key to continue.", dirprefix);
+                    "Press any key to continue.", DIRPREFIX);
             getch();
             return EXIT_FAILURE;
         }
 
+        puts("");
         do {
-            printf("\nEnter the file number and press Enter >>> ");
-            while (fscanf(stdin, "%d", &filenum) != 1) {
+            printf("Enter the file number and press Enter >>> ");
+            while (fscanf(stdin, "%d", &fileNum) != 1) {
                 while (getchar() != '\n')
                     ;
                 printf("Enter the file number and press Enter >>> ");
             }
             while (getchar() != '\n')
                 ;
-            if ((filenum <= fileCount) && (filenum != 0))
+            if ((fileNum <= fileCount) && (fileNum != 0))
                 okay = TRUE;
         } while (!okay);
         
-        strcpy(datfile, dirprefix);
-        strcat(datfile, filename[filenum - 1]);
-    }
-    else {
+        strcpy(datfile, DIRPREFIX);
+        strcat(datfile, filename[fileNum - 1]);
+    } else {
         fprintf(stderr, "*** Error! Could not open the directory '%s' ***\n\n"
-                            "Press any key to continue.", dirprefix);
-            getch();
+                            "Press any key to continue.", DIRPREFIX);
+        getch();
         return EXIT_FAILURE;
     }
 

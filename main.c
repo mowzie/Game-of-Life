@@ -1,8 +1,8 @@
 //----------------------------------------------------------------------------
-// File:      main.c
+// File:        main.c
 //
 // Functions:
-//            main()
+//              main()
 //----------------------------------------------------------------------------
 
 #include <conio.h>
@@ -45,9 +45,7 @@
 //             applyRule()
 //             printGrid()
 //
-// Parameters: const char* datfile
-//             char gridPtrCurr[][COLS]
-//             char gridPtrNext[][COLS]
+// Parameters: N/A
 //
 // Returns:    int EXIT_SUCCESS
 //
@@ -63,9 +61,9 @@ int main(void) {
     char (*tmpPtr)[COLS] = NULL;        //temp pointer used for pointer swap
     char ch = 0;                        //getch holder when running
     unsigned int count = 0;             //generation counter
-    BOOL autorun = FALSE;
+    int autorun = FALSE;                //whether or not to run without user input
 
-    //windows.h call: set the window size when it loads so we can see everything
+    //windows.h call: set the window size when it loads
     SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 4};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
@@ -76,12 +74,12 @@ int main(void) {
                           tmpPtr) == EXIT_APPLICATION)
             return EXIT_SUCCESS;  //This is the only way out of the game
 
-        readDatFile(datfile, gridA); //reset game info
-        gridPtrCurr = gridA;               //
-        gridPtrNext = gridB;               //
-        count = 0;                         //
-        displayRunningMenu();
-        autorun = FALSE;
+        readDatFile(datfile, gridA);        //reset game info
+        gridPtrCurr = gridA;                //
+        gridPtrNext = gridB;                //
+        count = 0;                          //
+        displayRunningMenu();               //
+        autorun = FALSE;                    //
 
         //Run simulation
         do {
@@ -91,25 +89,25 @@ int main(void) {
             applyRule(gridPtrCurr, gridPtrNext);
             printGrid(gridPtrCurr);
 
-            // swap pointers
+            //Swap pointers to make the next array state the current state
             tmpPtr = gridPtrCurr;
             gridPtrCurr = gridPtrNext;
             gridPtrNext = tmpPtr;
 
+            //Toggle autorun
             if (!autorun) {
                 ch = getch();
                 if (ch == ' ') {
                     autorun = !autorun;
                 }
             }
-
             if (kbhit()) {
                 ch = getch();
                 if (ch == ' ') {
                     autorun = !autorun;
                 }
             }
-        } while(ch != KEY_ESC);	//Exit the simulation back to the menu
+        } while(ch != KEY_ESC); //Exit the simulation back to the menu
     }
 
     return EXIT_SUCCESS;

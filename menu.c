@@ -1,13 +1,13 @@
 //----------------------------------------------------------------------------
-// File:      menu.c
+// File:        menu.c
 //
 // Functions:
-//            runLoadScreen()
-//            loadScreenSleep()
-//            checkLoadScreenKeyPress()
-//            displayMenu()
-//            displayRunningMenu()
-//            printGrid()
+//              runLoadScreen()
+//              loadScreenSleep()
+//              checkLoadScreenKeyPress()
+//              displayMenu()
+//              displayRunningMenu()
+//              printGrid()
 //----------------------------------------------------------------------------
 
 #include <conio.h>
@@ -19,64 +19,61 @@
 #include "menu.h"
 
 //project wide global variable
-extern const char* dirprefix = "worlds\\";
+extern const char* DIRPREFIX = "worlds\\";
 //internal global variables
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
 
 //----------------------------------------------------------------------------
-// Function:   runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
-//                           char gridPtrNext[][COLS], char tmpPtr[][COLS])
+// Function:    runLoadScreen()
 //
-// Title:      Function to run opening simulation as a splash screen
+// Title:       Function to run opening simulation as a splash screen
 //
 // Description:
-//             Dual purpose to both initialize game states
-//             and display friendly welcome screen
+//              Dual purpose to both initialize game states
+//              and display friendly welcome screen
 //
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      N/A
+// Input:       N/A
 //
-// Ouput:      "Life" Generation counter to stdout
+// Ouput:       "Life" Generation counter to stdout
 //
-// Called By:  main()
+// Called By:   main()
 //
-// Calls:      readDatFile()
-//             printGrid()
-//             gotoxy()
-//             loadScreenSleep()
-//             checkLoadScreenKeyPress()
-//             applyRule()
+// Calls:       readDatFile()
+//              printGrid()
+//              gotoxy()
+//              loadScreenSleep()
+//              checkLoadScreenKeyPress()
+//              applyRule()
 //
-// Parameters: const char* datfile
-//             char gridPtrCurr[][COLS]
-//             char gridPtrNext[][COLS]
+// Parameters:  const char* datfile
+//              char gridPtrCurr[][COLS]
+//              char gridPtrNext[][COLS]
 //
-// Returns:    int quitLoadScreen
+// Returns:     int quitLoadScreen
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
                   char gridPtrNext[][COLS], char tmpPtr[][COLS]) {
     char ch = 0;
-    int quitLoadScreen = FALSE;   //"bool" to show start screen
+    int quitLoadScreen = FALSE;     //"bool" to show start screen
     int count = 0;
 
-
-
-    strcpy(datfile, dirprefix);         //Load in the Splash Screen
+    strcpy(datfile, DIRPREFIX);     //Load in the Splash Screen
     strcat(datfile, welcomeFile);
     if (readDatFile(datfile, gridPtrCurr) == EXIT_FAILURE) {
         printf("\nCreating new 'welcome.dat' from a randomly generated file\n\n");
@@ -88,7 +85,7 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
     }
     displayMenu();
     printGrid(gridPtrCurr);
-    gotoxy(COLS, ROWS);   //hide the curser by the game border
+    gotoxy(COLS, ROWS);     //hide the curser by the game border
     quitLoadScreen = loadScreenSleep();
 
     //user wanted to exit the app, so exit cleanly
@@ -131,41 +128,40 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
 }
 
 //----------------------------------------------------------------------------
-// Function:   loadScreenSleep()
+// Function:    loadScreenSleep()
 //
-// Title:      Function to keep splash screen still
+// Title:       Function to keep splash screen still
 //
 // Description:
-//             Keeps the splash screen from "evolving" while still 
-//             accepting a keypress
+//              Keeps the splash screen from "evolving" while still
+//              accepting a keypress
 //
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      key press to enter into the game
+// Input:       key press to enter into the game
 //
-// Ouput:      N/A
+// Ouput:       N/A
 //
-// Called By:  runLoadScreen()
+// Called By:   runLoadScreen()
 //
-// Calls:      N/A
+// Calls:       N/A
 //
-// Parameters: N/A
+// Parameters:  N/A
 //
-// Returns:    int
-//                 either exit_success (1) or value of keypress
+// Returns:     int either exit_success (1) or value of keypress
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 int loadScreenSleep() {
     int i = 0;
@@ -182,45 +178,45 @@ int loadScreenSleep() {
 }
 
 //----------------------------------------------------------------------------
-// Function:   checkLoadScreenKeyPress(char* datfile, const char ch)
+// Function:    checkLoadScreenKeyPress()
 //
-// Title:      Function to evualuate keypress
+// Title:       Function to evualuate keypress
 //
 // Description:
-//             Evauluates keypress while splashscreen is running
-//             Exits loadscreen and starts game if valid keypress
+//              Evauluates keypress while splashscreen is running
+//              Exits loadscreen and starts game if valid keypress
 //
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      N/A
+// Input:       N/A
 //
-// Ouput:      N/A
+// Ouput:       N/A
 //
-// Called By:  runLoadScreen()
+// Called By:   runLoadScreen()
 //
-// Calls:      enterFileName()
-//             creatDatFile()
-//             createRandDatFile()
-//             displayFiles()
+// Calls:       enterFileName()
+//              creatDatFile()
+//              createRandDatFile()
+//              displayFiles()
 //
-// Parameters: char* datfile
-//             const char ch
+// Parameters:  char* datfile
+//              const char ch
 //
-// Returns:    int boolQuit
-//                 either exit_success (1) or value of keypress
+// Returns:     int boolQuit
+//              either exit_success (1) or value of keypress
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 int checkLoadScreenKeyPress(char* datfile, const char ch) {
     int boolQuit = TRUE;  //Assume the user is exiting out of the load screen
@@ -240,7 +236,7 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
         break;
 
     case 'r':
-        strcpy(datfile, dirprefix);
+        strcpy(datfile, DIRPREFIX);
         strcat(datfile, randomFile);
         createRandDatFile(datfile);
         break;
@@ -254,39 +250,39 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
 }
 
 //----------------------------------------------------------------------------
-// Function:   displayMenu(void)
+// Function:    displayMenu()
 //
-// Title:      Displays simple menu below game field
+// Title:       Displays simple menu below game field
 //
 // Description:
-//             Sets a border below the game field, and shows the simple menu
+//              Sets a border below the game field, and shows the simple menu
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      N/A
+// Input:       N/A
 //
-// Ouput:      row of "-"s below valid game field
-//             Simple menu for valid keypresses
+// Ouput:       row of "-"s below valid game field
+//              Simple menu for valid keypresses
 //
-// Called By:  runLoadScreen()
+// Called By:   runLoadScreen()
 //
-// Calls:      gotoxy()
+// Calls:       gotoxy()
 //
-// Parameters: void
+// Parameters:  void
 //
-// Returns:    void
+// Returns:     void
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 void displayMenu(void) {
     int i = 0;
@@ -303,39 +299,39 @@ void displayMenu(void) {
 }
 
 //----------------------------------------------------------------------------
-// Function:   displayRunningMenu(void)
+// Function:    displayRunningMenu(void)
 //
-// Title:      Displays simple menu below game field
+// Title:       Displays simple menu below game field
 //
 // Description:
-//             Sets a border below the game field, and shows the simple menu
+//              Sets a border below the game field, and shows the simple menu
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      N/A
+// Input:       N/A
 //
-// Ouput:      row of "-"s below valid game field
-//             Simple menu for valid keypresses
+// Ouput:       row of "-"s below valid game field
+//              Simple menu for valid keypresses
 //
-// Called By:  main()
+// Called By:   main()
 //
-// Calls:      gotoxy()
+// Calls:       gotoxy()
 //
-// Parameters: void
+// Parameters:  void
 //
-// Returns:    void
+// Returns:     void
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 void displayRunningMenu(void) {
     int i = 0;
@@ -354,39 +350,39 @@ void displayRunningMenu(void) {
 }
 
 //----------------------------------------------------------------------------
-// Function:   printGrid(const char gridCurr[][COLS])
+// Function:    printGrid()
 //
-// Title:      Prints current status of life
+// Title:       Prints current status of life
 //
 // Description:
-//             Iterates through each piece of life and displays if its alive
+//              Iterates through each piece of life and displays if its alive
 //
-// Programmer: Ian Littke
+// Programmer:  Ian Littke
 //
-// Date:       12/04/2014
+// Date:        12/04/2014
 //
-// Version:    1.0
+// Version:     1.0
 //
 // Environment:
-//             Hardware: Intel x86_64 PC
-//             Software: Windows 8.1
-//             Compiles under Microsoft Visual Studio 2012
+//              Hardware: Intel x86_64 PC
+//              Software: Windows 8.1
+//              Compiles under Microsoft Visual Studio 2012
 //
-// Input:      N/A
+// Input:       N/A
 //
-// Ouput:      a "*" for each piece of living life in the grid in stdout
+// Ouput:       a "*" for each piece of living life in the grid in stdout
 //
-// Called By:  main()
-//             runLoadScreen()
+// Called By:   main()
+//              runLoadScreen()
 //
-// Calls:      gotoxy()
+// Calls:       gotoxy()
 //
-// Parameters: gridCur[][COLS]
+// Parameters:  gridCur[][COLS]
 //
-// Returns:    void
+// Returns:     void
 //
 // History Log:
-//             12/04/2014 IL completed version 1.0
+//              12/04/2014 IL completed version 1.0
 //----------------------------------------------------------------------------
 void printGrid(const char gridCurr[][COLS]) {
     int i = 0;

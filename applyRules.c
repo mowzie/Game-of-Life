@@ -1,46 +1,49 @@
 //---------------------------------------------------------
-// File: applyRules.c
+// File:        applyRules.c
 //
 // Functions:
-//    applyRule()
-//    neighbors()
+//              applyRule()
+//              neighbors()
 //---------------------------------------------------------
 
 #include "applyRules.h"
 
 //---------------------------------------------------------
-// Function: applyRule
+// Function:    applyRule
 //
-// Title: Rule Applier
+// Title:       Rule Applier
 //
 // Description:
-// Take in two 2D arrays and Parse through the first two
-//      for filled and empty cells, pases
+//              Take in two 2D arrays and Parse through the first two
+//              for filled and empty cells, pases
 //
-// Programmer: Taylor Kenniston
+// Programmer:  Taylor Kenniston
 //
-// Date: 12/3/2014
+// Date:        12/3/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//   Intel i5 PC
-//   Software: Windows 10 Preview
-//   Compiles under Microsoft Visual Studio 2013//
+//              Intel i5 PC
+//              Software: Windows 10 Preview
+//              Compiles under Microsoft Visual Studio 2013
 //
-// Input: void
+// Input:       N/A
 //
+// Output:      N/A
 //
-// Parameters:
-// const char gridCurr[][]
-// char gridNext[][]
+// Called By:   main()
 //
-// Returns: void
+// Calls:       N/A
+//
+// Parameters:  const char gridCurr[][COLS]
+//              char gridNext[][COLS]
+//
+// Returns:     N/A
 //
 // History Log:
-//   03-Dec-14 TK completed version 1.0
+//              03-Dec-14 TK completed version 1.0
 //---------------------------------------------------------
-
 void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
     int x = 0;
     int y = 0;
@@ -58,64 +61,65 @@ void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
 }
 
 //---------------------------------------------------------
-// Function: applyRule
+// Function:    neighbors
 //
-// Title: Rule Applier
+// Title:       Function to find total neighbors
 //
 // Description:
-// Take in coords of an array that is passed through and
-//      find the total neighbors of that cell
+//              Take in coords of an array that is passed through and
+//              find the total neighbors of that cell
 //
-// Programmer: Taylor Kenniston
+// Programmer:  Taylor Kenniston
 //
-// Date: 12/3/2014
+// Date:        12/3/2014
 //
-// Version: 1.0
+// Version:     1.0
 //
 // Environment:
-//   Intel i5 PC
-//   Software: Windows 10 Preview
-//   Compiles under Microsoft Visual Studio 2013//
+//              Intel i5 PC
+//              Software: Windows 10 Preview
+//              Compiles under Microsoft Visual Studio 2013
 //
-// Input: void
+// Input:       N/A
 //
+// Output:      N/A
 //
-// Parameters:
-// unsigned int x
-// unsigned int y
-// const char gridCurr[][]
-// char gridNext[][]
+// Called By:   applyRule()
 //
-// Returns: ret
+// Calls:       N/A
+//
+// Parameters:  char* datfile
+//
+// Returns:     N/A
 //
 // History Log:
-//   03-Dec-14 TK completed version 1.0
+//              03-Dec-14 TK completed version 1.0
 //---------------------------------------------------------
 int neighbors(unsigned int x, unsigned int y, const char grid[][COLS]) {
-    int ret = 0;
+    int count = 0;
 
     if (x <= COLS && y <= ROWS) {
         if (x - 1 < COLS) {
-            ret += (grid[y][(x - 1)] == TRUE);
+            count += (grid[y][(x - 1)] == TRUE);
             if (y - 1 < ROWS)
-                ret += (grid[(y - 1)][(x - 1)] == TRUE);
+                count += (grid[(y - 1)][(x - 1)] == TRUE);
             if (y + 1 < ROWS)
-                ret += (grid[(y + 1)][(x - 1)] == TRUE);
+                count += (grid[(y + 1)][(x - 1)] == TRUE);
         }
         if (x + 1 < COLS) {
-            ret += (grid[y][(x + 1)] == TRUE);
+            count += (grid[y][(x + 1)] == TRUE);
             if (y - 1 < ROWS)
-                ret += (grid[(y - 1)][(x + 1)] == TRUE);
+                count += (grid[(y - 1)][(x + 1)] == TRUE);
             if (y + 1 < ROWS)
-                ret += (grid[(y + 1)][(x + 1)] == TRUE);
+                count += (grid[(y + 1)][(x + 1)] == TRUE);
         }
         if (y - 1 < ROWS) {
-            ret += (grid[(y - 1)][x] == TRUE);
+            count += (grid[(y - 1)][x] == TRUE);
         }
         if (y + 1 < ROWS) {
-            ret += (grid[(y + 1)][x] == TRUE);
+            count += (grid[(y + 1)][x] == TRUE);
         }
     }
 
-    return ret;
+    return count;
 }
