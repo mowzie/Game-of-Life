@@ -355,9 +355,11 @@ int readDatFile(const char* filename, char grid[][COLS]) {
 
 void enterFileName(char* datfile) {
     char filename[FILENAME_MAX];
-
+    wchar_t buff[PATH_MAX];
+    _wgetcwd(buff, PATH_MAX);  //get string of current working dir
+        
     system("cls");
-    printf("Please enter a filename to save as your new dat file.");
+        printf("Please enter a filename to save as your new dat file.");
 
     do {
         printf("\nYour filename must end with a '.dat' file extension.\n");
@@ -369,12 +371,12 @@ void enterFileName(char* datfile) {
         else
         while (getchar() != '\n')
             ;
-        // Verify that the file ends in .dat and isn't too long for the datfile buffer
-    } while (!hasDatExt(filename) && (strlen(filename) < sizeof(datfile)-strlen(dirprefix)));
-
+        // Verify that the file ends in .dat and isn't longer than MAX_PATH
+    } while ((!hasDatExt(filename)) || (strlen(filename) >= MAX_PATH
+                                       - wcslen(buff)- strlen(dirprefix) -1));
     strcpy(datfile, dirprefix);
     strcat(datfile, filename);
-
+    
     puts("");
 }
 
