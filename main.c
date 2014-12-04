@@ -15,9 +15,10 @@ int main(void) {
     char (*tmpPtr)[COLS] = NULL;        //temporary pointer used for pointer swap
     char ch = 0;                        //getch holder when running
     unsigned int count = 0;             //generation counter
+    BOOL autorun = FALSE;
 
     //windows.h call: set the window size when it loads so we can see everything
-    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 3};
+    SMALL_RECT windowSize = {0 , 0 , COLS , ROWS + 4};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
 
     while (TRUE) {
@@ -29,6 +30,7 @@ int main(void) {
         gridPtrNext = gridB;               //
         count = 0;                         //
         displayRunningMenu();
+        autorun = FALSE;
 
         do {
             gotoxy(COLS - 9, ROWS + 1);
@@ -42,7 +44,19 @@ int main(void) {
             gridPtrCurr = gridPtrNext;
             gridPtrNext = tmpPtr;
 
-            ch = getch();
+            if (!autorun) {
+                ch = getch();
+                if (ch == ' ') {
+                    autorun = !autorun;
+                }
+            }
+
+            if (kbhit()) {
+                ch = getch();
+                if (ch == ' ') {
+                    autorun = !autorun;
+                }
+            }
         } while(ch != KEY_ESC);
     }
 

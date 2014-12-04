@@ -122,7 +122,8 @@ void createDatFile(const char* filename) {
     gotoxy(0, ROWS + 1);
     printf("Press (ESC) to exit");
     gotoxy(0, ROWS + 2);
-    printf("Use the arrow keys (or wasd) to move. Press Spacebar to toggle a location");
+    puts("Use the arrow keys (or wasd) to move");
+    puts("Press Spacebar to toggle a location");
 
     // Start in top left corner
     gotoxy(loc.x, loc.y);

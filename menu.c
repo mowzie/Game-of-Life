@@ -15,11 +15,12 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS], char gridPtrNext[][CO
     int quitLoadScreen = FALSE;         //"bool" to show start screen
     int count = 0;
 
+    displayMenu();
+
     strcpy(datfile, dirprefix);         //Load in the Splash Screen
     strcat(datfile, welcomeFile);
     readDatFile(datfile, gridPtrCurr, ROWS);
     printGrid(gridPtrCurr);
-    displayMenu();
     gotoxy(0, 0);
     quitLoadScreen = loadScreenSleep();
 
@@ -108,6 +109,8 @@ int checkLoadScreenKeyPress(char* datfile, const char ch) {
 void displayMenu(void) {
     int i = 0;
 
+    system("cls");
+
     gotoxy(0, ROWS);
     for (i = 0; i < COLS; i++) {
         printf("-");
@@ -128,7 +131,8 @@ void displayRunningMenu(void) {
     for (i = 0; i < COLS; i++) {
         printf(" ");
     }
-    printf("\nPress any other key to advance generations");
+    puts("\nPress Spacebar to toggle autorun");
+    puts("Press any other key to manually advance generations");
 }
 
 void printGrid(const char gridCurr[][COLS]) {
