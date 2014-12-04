@@ -1,3 +1,10 @@
+//---------------------------------------------------------
+// File: applyRules.h
+//
+// Functions:
+//    applyRule()
+//    neighbors()
+//---------------------------------------------------------
 #ifndef APPLY_RULES_H
 #define APPLY_RULES_H
 
