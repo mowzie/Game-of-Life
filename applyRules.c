@@ -5,7 +5,9 @@
 //    applyRule()
 //    neighbors()
 //---------------------------------------------------------
+
 #include "applyRules.h"
+
 //---------------------------------------------------------
 // Function: applyRule
 //
@@ -25,11 +27,11 @@
 //   Intel i5 PC
 //   Software: Windows 10 Preview
 //   Compiles under Microsoft Visual Studio 2013//
-// 
+//
 // Input: void
 //
 //
-// Parameters: 
+// Parameters:
 // const char gridCurr[][]
 // char gridNext[][]
 //
@@ -54,13 +56,14 @@ void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
         }
     }
 }
+
 //---------------------------------------------------------
 // Function: applyRule
 //
 // Title: Rule Applier
 //
 // Description:
-// Take in coords of an array that is passed through and 
+// Take in coords of an array that is passed through and
 //      find the total neighbors of that cell
 //
 // Programmer: Taylor Kenniston
@@ -73,11 +76,11 @@ void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
 //   Intel i5 PC
 //   Software: Windows 10 Preview
 //   Compiles under Microsoft Visual Studio 2013//
-// 
+//
 // Input: void
 //
 //
-// Parameters: 
+// Parameters:
 // unsigned int x
 // unsigned int y
 // const char gridCurr[][]
@@ -88,7 +91,6 @@ void applyRule(const char gridCurr[][COLS], char gridNext[][COLS]) {
 // History Log:
 //   03-Dec-14 TK completed version 1.0
 //---------------------------------------------------------
-
 int neighbors(unsigned int x, unsigned int y, const char grid[][COLS]) {
     int ret = 0;
 

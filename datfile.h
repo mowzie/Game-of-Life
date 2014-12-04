@@ -1,6 +1,3 @@
-#ifndef DATFILE_H
-#define DATFILE_H
-
 //---------------------------------------------------------
 // File: datfile.h
 //
@@ -10,6 +7,9 @@
 //            createRandDatFile()
 //            gotoxy()
 //---------------------------------------------------------
+
+#ifndef DATFILE_H
+#define DATFILE_H
 
 #include "gameoflife.h"
 

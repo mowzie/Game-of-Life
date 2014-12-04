@@ -20,7 +20,7 @@
 
 //project wide global variable
 extern const char* dirprefix = ".\\worlds\\";
-//internal global variable
+//internal global variables
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
 
@@ -101,7 +101,7 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
 
         applyRule(gridPtrCurr, gridPtrNext);
         printGrid(gridPtrCurr);
-        
+
         // swap array pointers
         tmpPtr = gridPtrCurr;
         gridPtrCurr = gridPtrNext;
@@ -161,8 +161,9 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
 //----------------------------------------------------------------------------
 int loadScreenSleep() {
     int i = 0;
+
     //Sleep for 5 seconds before running welcomeFile
-    for (i = 0; i < 5000; i++) { 
+    for (i = 0; i < 5000; i++) {
         if (kbhit()) {
             return getch();  //side effect of starting the simulation early
         }

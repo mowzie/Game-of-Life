@@ -1,9 +1,9 @@
-#ifndef GAMEOFLIFE_H
-#define GAMEOFLIFE_H
-
 //----------------------------------------------------------------------------
 // File:      gameoflife.h
 //----------------------------------------------------------------------------
+
+#ifndef GAMEOFLIFE_H
+#define GAMEOFLIFE_H
 
 #define ROWS              24
 #define COLS              79
@@ -14,10 +14,10 @@
 #define	ARROW_RIGHT       77
 #define TRUE               1
 #define FALSE              0
-#define EXIT_APPLICATION  -1  //internal define for if user wants to exit
+#define EXIT_APPLICATION  -1    //internal define for if user wants to exit
 
 #pragma warning(disable: 4996)
 
-const char* dirprefix;   // Make globally accessible to other .c files
+const char* dirprefix;          // Make globally accessible to other .c files
 
 #endif
