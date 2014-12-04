@@ -307,13 +307,13 @@ void createRandDatFile(const char* filename) {
 // History Log:
 //            12/04/2014 MA completed version 1.0
 //---------------------------------------------------------
-void readDatFile(const char* filename, char grid[][COLS], const int rows) {
+void readDatFile(const char* filename, char grid[][COLS]) {
     FILE* inFileH = NULL;
     int i = 0;
     int j = 0;
 
-    // init grid with 0
-    for (i = 0; i < rows; i++) {
+        // init grid with 0
+    for (i = 0; i < ROWS; i++) {
         for (j = 0; j < COLS; j++) {
             grid[i][j] = 0;
         }

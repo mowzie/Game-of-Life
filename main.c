@@ -76,7 +76,7 @@ int main(void) {
                           tmpPtr) == EXIT_APPLICATION)
             return EXIT_SUCCESS;  //This is the only way out of the game
 
-        readDatFile(datfile, gridA, ROWS); //reset game info
+        readDatFile(datfile, gridA); //reset game info
         gridPtrCurr = gridA;               //
         gridPtrNext = gridB;               //
         count = 0;                         //

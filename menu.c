@@ -78,7 +78,7 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
 
     strcpy(datfile, dirprefix);         //Load in the Splash Screen
     strcat(datfile, welcomeFile);
-    readDatFile(datfile, gridPtrCurr, ROWS);
+    readDatFile(datfile, gridPtrCurr);
     printGrid(gridPtrCurr);
     gotoxy(COLS, ROWS);   //hide the curser by the game border
     quitLoadScreen = loadScreenSleep();
@@ -94,7 +94,7 @@ int runLoadScreen(char* datfile, char gridPtrCurr[][COLS],
             count = 0;
             gotoxy(COLS - 9, ROWS + 1);
             printf("Gen: %4d", count);
-            readDatFile(datfile, gridPtrCurr, ROWS);
+            readDatFile(datfile, gridPtrCurr);
             printGrid(gridPtrCurr);
             quitLoadScreen = loadScreenSleep();
         }
