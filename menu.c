@@ -19,7 +19,7 @@
 #include "menu.h"
 
 //project wide global variable
-extern const char* dirprefix = ".\\worlds\\";
+extern const char* dirprefix = "worlds\\";
 //internal global variables
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
