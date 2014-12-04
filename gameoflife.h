@@ -18,6 +18,6 @@
 
 #pragma warning(disable: 4996)
 
-extern const char* dirprefix;   // Make globally accessible to other .c files
+const char* dirprefix;   // Make globally accessible to other .c files
 
 #endif
