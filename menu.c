@@ -10,6 +10,49 @@ extern const char* dirprefix = ".\\worlds\\";
 const char* welcomeFile = "welcome.dat";
 const char* randomFile = "random.dat";
 
+//----------------------------------------------------------------------------
+// Function: runLoadScreen(char* datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS])
+//
+// Title:    
+//
+// Description:
+//            Dual purpose to both initialize game states
+//            and display friendly welcome screen
+//
+//
+// Programmer:    Ian Littke
+//
+// Date:    12/04/2014
+//
+// Version: 1.0
+//
+// Environment:
+//            Hardware: Intel x86_64 PC
+//            Software: Windows 8.1
+//            Compiles under Microsoft Visual Studio 2012
+//
+// Input:    N/A
+//
+// Ouput:    N/A
+//
+// Called By:    main()
+//
+// Calls:        readDatFile()
+//               printGrid()
+//               gotoxy()
+//               loadScreenSleep()
+//               checkLoadScreenKeyPress()
+//               applyRule()
+//
+// Parameters:    const char* datfile
+//                char gridPtrCurr[][COLS]
+//                char gridPtrNext[][COLS]
+//
+// Returns:    N/A
+//
+// History Log:
+//            12/04/2014 IL completed version 1.0
+//----------------------------------------------------------------------------
 int runLoadScreen(char* datfile, char gridPtrCurr[][COLS], char gridPtrNext[][COLS], char tmpPtr[][COLS]) {
     char ch = 0;
     int quitLoadScreen = FALSE;         //"bool" to show start screen
