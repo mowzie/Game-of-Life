@@ -247,7 +247,6 @@ void createRandDatFile(const char* filename) {
                 grid[i][j] = 1;
             }
         }
-        puts("");
     }
 
     outFileH = fopen(filename, "w");
